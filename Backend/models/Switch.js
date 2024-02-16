@@ -1,68 +1,87 @@
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-// const schema = new mongoose.Schema({
-//     switchName: { 
-//         type: String, 
-//         required: true 
-    // },
-    // buildings
-    // floor
-    // room
-    // rack
-    // shelf
-    // model
-    // batchNumber
-    // macAddress
-    // portType
-    // port1
-    // port2
-    // port3
-    // port4
-    // port5
-    // port6
-    // port7
-    // port8
-    // port9
-    // port10
-    // port11
-    // port12
-    // port13
-    // port14
-    // port15
-    // port16
-    // port17
-    // port18
-    // port19
-    // port20
-    // port21
-    // port22
-    // port23
-    // port24
-    // port25
-    // port26
-    // port27
-    // port28
-    // port29
-    // port30
-    // port31
-    // port32
-    // port33
-    // port34
-    // port35
-    // port36
-    // port37
-    // port38
-    // port39
-    // port40
-    // port41
-    // port42
-    // port43
-    // port44
-    // port45
-    // port46
-    // port47
-    // port48
+const switchSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  building: {
+    type: String,
+    required: true,
+  },
+  floor: {
+    type: String,
+    required: true,
+  },
+  room: {
+    type: Number,
+    required: true,
+  },
+  shelfNumber: {
+    type: String,
+    required: true,
+  },
+  model: {
+    type: String,
+    required: true,
+  },
+  brand: {
+    type: String,
+    required: true,
+  },
+  macAddress: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  serialNumber: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  ports: {
+    type: [portSchema],
+    required: true,
+  },
+  ipAddress: {
+    type: String,
+    required: true,
+  },
+  vlan: {
+    type: Number,
+    required: true,
+  },
+  firmwareVersion: {
+    type: String,
+  },
+  portType: {
+    type: Number,
+  }
+});
 
-// });
+const portSchema = new mongoose.Schema({
+    portNumber: {
+      type: Number,
+      required: true,
+    },
+    switchNumber: {
+        type: Number,
+        required: true,
+      },
+    patchPanelPortNumber: {
+        type: String,
+        required: true,
+      },
+    roomNumber: {
+      type: String,
+      required: true,
+    },
+    batchNumberOnWall: {
+        type: String,
+        required: true,
+      },
+  });
 
-// module.exports = mongoose.model('Switch', schema);
+const Switch = mongoose.model('Switch', switchSchema);
+
+module.exports = Switch;
