@@ -5,7 +5,6 @@
 //         type: String, 
 //         required: true 
     // },
-   // 1332132
     // buildings
     // floor
     // room
