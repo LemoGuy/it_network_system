@@ -4,7 +4,6 @@
 //     switchName: { 
 //         type: String, 
 //         required: true 
-// 454545
     // },
     // buildings
     // floor
