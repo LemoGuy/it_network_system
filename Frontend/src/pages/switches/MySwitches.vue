@@ -11,9 +11,9 @@ import resIsOk from '../../utils/resIsOk';
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 let decodedToken = jwt_decode(token.value)
 
-let books = ref([]);
-let filteredBooks = ref([]);
-let bookName = ref('');
+let switches = ref([]);
+let filteredSwitches = ref([]);
+let switchName = ref('');
 
 let fuse = null;
 
@@ -25,7 +25,7 @@ const columns = [
     {
         name: 'name',
         required: true,
-        label: 'Book Name',
+        label: 'Switch Name',
         align: 'left',
         field: 'name',
         format: val => `${val}`,
@@ -53,7 +53,7 @@ const columns = [
 
 onMounted(async () => {
 
-    let res = await backend.get('/book?own=1', {
+    let res = await backend.get('/switch?own=1', {
         headers: {
             'Authorization': `Bearer ${token.value}`
         }
@@ -67,8 +67,8 @@ onMounted(async () => {
             formatedDate = dateFormat(formatedDate, 'dddd, mmmm dS, yyyy, h:MM:ss TT')
             data[i].uploadDate = formatedDate
         }
-        books.value = data
-        filteredBooks.value = data
+        switches.value = data
+        filteredSwitches.value = data
         fuse = new Fuse(data, {
             keys: ['name', 'uploadedBy.name']
         });
@@ -77,29 +77,29 @@ onMounted(async () => {
 
 const handleSearch = (e) => {
     if (e === '') {
-        filteredBooks.value = books.value
+        filteredSwitches.value = switches.value
         return
     }
-    let newFilteredBooks = fuse.search(e)
-    newFilteredBooks = newFilteredBooks.map(book => book.item);
-    filteredBooks.value = newFilteredBooks;
+    let newfilteredSwitches = fuse.search(e)
+    newfilteredSwitches = newfilteredSwitches.map(switches => switches.item); /// ????? switch
+    filteredSwitches.value = newfilteredSwitches;
 }
 
 const getFileUrl = (row) => {
-    return `${backendUrl}file/${row.randomToken}-${row.bookHash}.${row.bookFileType}`
+    return `${backendUrl}file/${row.randomToken}-${row.switchHash}.${row.switchFileType}`
 }
 
 
-async function deleteBook(id) {
-    let res = await backend.delete(`/book/${id}`, {
+async function deleteSwitch(id) {
+    let res = await backend.delete(`/switch/${id}`, {
         headers: {
             'Authorization': `Bearer ${token.value}`
         }
     })
     if (res.status === 200) {
-        books.value = books.value.filter(book => book._id !== id)
-        filteredBooks.value = filteredBooks.value.filter(book => book._id !== id)
-        fuse = new Fuse(books.value, {
+        switches.value = switches.value.filter(switches => switches._id !== id)
+        filteredSwitches.value = filteredSwitches.value.filter(switches => switches._id !== id)
+        fuse = new Fuse(switches.value, {
             keys: ['name', 'uploadedBy.name']
         });
     }
@@ -112,19 +112,19 @@ async function deleteBook(id) {
 <template>
     <Layout>
         <q-card class="filter-container">
-            <q-input v-model='bookName' label="Search" outlined :debounce="500" @update:model-value="handleSearch">
+            <q-input v-model='switchName' label="Search" outlined :debounce="500" @update:model-value="handleSearch">
                 <template v-slot:append>
                     <q-icon name="search" />
                 </template>
             </q-input>
         </q-card>
 
-        <q-table row-key="_id" class='table shad' title="My Books" :rows="filteredBooks" :columns="columns"
+        <q-table row-key="_id" class='table shad' title="My Switches" :rows="filteredSwitches" :columns="columns"
             :pagination="pageOptions">
             <template v-slot:body-cell-open="props">
                 <q-td :props="props">
                     <q-btn :href="getFileUrl(props.row)">
-                        <q-icon left name="menu_book" />
+                        <q-icon left name="menu_switch" />
                         <div>Read</div>
                     </q-btn>
                     <!-- <a :href="getFileUrl(props.row)">{{props.row.name}}</a> -->
@@ -132,7 +132,7 @@ async function deleteBook(id) {
             </template>
             <template v-slot:body-cell-delete="props">
                 <q-td :props="props">
-                    <q-btn @click="deleteBook(props.row._id)" icon="delete_forever" color="red" />
+                    <q-btn @click="deleteSwitch(props.row._id)" icon="delete_forever" color="red" />
                     <!-- <a :href="getFileUrl(props.row)">{{props.row.name}}</a> -->
                 </q-td>
             </template>

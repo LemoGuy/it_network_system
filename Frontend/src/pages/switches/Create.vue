@@ -18,23 +18,23 @@ async function create() {
 
     const formData = new FormData();
 
-    if (!data.value.name || !data.value.bookData) {
-        $q.notify('Both fields must be filled!')
+    if (!data.value.name || !data.value.switchData) {
+        $q.notify('All fields must be filled!')
         return
     }
 
     formData.append('name', data.value.name || '')
-    formData.append('bookData', data.value.bookData)
+    formData.append('switchData', data.value.switchData)
 
 
     let dataEntered
     try {
-        dataEntered = await backend.post(`/book`, formData, {
+        dataEntered = await backend.post(`/switch`, formData, {
             headers: {
                 Authorization: `Bearer ${token.value}`,
             }
         })
-        router.push('/books/search')
+        router.push('/switches/search')
 
     } catch (e) {
         if (e.response.data.message) $q.notify(e.response.data.message)
@@ -44,59 +44,108 @@ async function create() {
 
 }
 
-
 </script>
+
+
+
 
 <template>
     <Layout>
         <q-card class="container">
             <p class="title">
-                Upload a book
+                Add Switch
             </p>
+
+
             <div class="input-container">
 
-                <q-input outlined class="input-field" v-model="data.name" label="Book Name"
-                    :rules="[val => !!val || 'Field is required']" />
+                <fieldset class="title">
+                    <legend>Location Details</legend>
 
-                <q-file outlined v-model="data.bookData" label="Upload Book" class="input-field" clearable
-                    :rules="[val => !!val || 'Field is required']" accept=".pdf" />
+                  
+                    <q-input outlined class="input-field" v-model="data.building" label="Building"
+                        :rules="[val => !!val || 'Field is required']" />
+
+                    <q-input outlined class="input-field" v-model="data.floor" label="Floor"
+                        :rules="[val => !!val || 'Field is required']" />
+
+                    <q-input outlined class="input-field" v-model="data.room" label="Room"
+                        :rules="[val => !!val || 'Field is required']" />
+
+                    <q-input outlined class="input-field" v-model="data.shelfNumber" label="Shelf Number"
+                        :rules="[val => !!val || 'Field is required']" />
+
+                </fieldset>
+
+                <fieldset class="title">
+                    <legend>Switch Details</legend>
+
+                    <q-input outlined class="input-field" v-model="data.name" label="Name"
+                        :rules="[val => !!val || 'Field is required']" />
+
+                    <q-input outlined class="input-field" v-model="data.model" label="Model"
+                        :rules="[val => !!val || 'Field is required']" />
+                    <q-input outlined class="input-field" v-model="data.brand" label="Brand"
+                        :rules="[val => !!val || 'Field is required']" />
+                    <q-input outlined class="input-field" v-model="data.macAddress" label="MAC Address"
+                        :rules="[val => !!val || 'Field is required']" />
+                    <q-input outlined class="input-field" v-model="data.serialNumber" label="Serial Number"
+                        :rules="[val => !!val || 'Field is required']" />
+                    <q-input outlined class="input-field" v-model="data.ipAddress" label="IP Address"
+                        :rules="[val => !!val || 'Field is required']" />
+                    <q-input outlined class="input-field" v-model="data.vlan" label="VLAN"
+                        :rules="[val => !!val || 'Field is required']" />
+                    <q-input outlined class="input-field" v-model="data.firmwareVersion" label="Firmware Version"
+                        :rules="[val => !!val || 'Field is required']" />
+                    <q-input outlined class="input-field" v-model="data.portType" label="Port Type"
+                        :rules="[val => !!val || 'Field is required']" />
+
+                </fieldset>
+
+                <fieldset class="title">
+                    <legend>Port Details</legend>
+
+                    <q-input outlined class="input-field" v-model="data.portNumber" label="Port Number"
+                        :rules="[val => !!val || 'Field is required']" />
+                    <q-input outlined class="input-field" v-model="data.patchPanelPortNumber" label="Patch Panel Port Number"
+                        :rules="[val => !!val || 'Field is required']" />
+                    <q-input outlined class="input-field" v-model="data.roomNumber" label="Goes to (Room Number)"
+                        :rules="[val => !!val || 'Field is required']" />
+                    <q-input outlined class="input-field" v-model="data.batchNumberOnWall" label="Batch Number On Wall"
+                        :rules="[val => !!val || 'Field is required']" />
+
+                </fieldset>
 
             </div>
+
+
+
+
+
             <q-btn class='create-btn' label='Upload' @click='create()' />
         </q-card>
-
-        <div class="container pp whitten m">
-          
-          <div>
-
-      </div>
-                  <div class="input-container">
-                      <div>
-                        <div class="note ppp"><p class="text-h6">Note:</p><p class="text-weight-bold">Please be informed that no user has the authority to conclude any legally binding agreement without the
-                explicit written consent from the University of Kurdistan Hewler. Our University accepts no liability for
-                the content of the files uploaded here, or for the consequences of any actions taken on the basis of the information
-                provided, unless that information is subsequently confirmed in writing. If you are not accepting the agreenment, you are notified that disclosing, copying, distributing or taking any action in reliance on the
-                contents of this information is strictly prohibited.</p>
-        </div>
-              </div>
-                  </div>
-                </div>
-
-        
-
     </Layout>
 </template>
+
+
+
+
+
+
+
 <style scoped>
 .address {
     width: 520px;
 }
+
 .whitten {
-  box-shadow: inset 2000px 0 0 0 rgba(255, 255, 255, 0.3);
-  background:  rgba(255, 255, 255, 0.5);
-  border-color: rgba(255, 255, 255, 1);
-  padding-top: 0px;
-  font-size: 12pt;
+    box-shadow: inset 2000px 0 0 0 rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 1);
+    padding-top: 0px;
+    font-size: 12pt;
 }
+
 .note {
     margin-top: 50px;
 }
@@ -104,26 +153,30 @@ async function create() {
 .title {
     font-size: 15pt;
 }
-.pp{
+
+.pp {
     width: 70% !important;
 }
-.ppp{
+
+.ppp {
     margin-top: 0px;
 }
-.m{
+
+.m {
     margin-top: 32px !important;
 }
+
 .container {
     display: flex;
     flex-direction: column;
-    box-shadow: 10px 20px 50px 6px #1e1d1d ;
+    box-shadow: 10px 20px 50px 6px #1e1d1d;
     margin-top: 20px;
 
 
     /* border: 1px solid grey; */
     /* border-radius: 10px; */
     padding: 25px;
-    width: 30%;
+    width: 100%;
     margin-inline: auto;
 }
 
@@ -168,4 +221,5 @@ async function create() {
 
 .input-field {
     width: 315px;
-}</style>
+}
+</style>
