@@ -4,11 +4,18 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 import App from './App.vue'
 import Dashboard from './pages/Dashboard.vue'
 import Login from './pages/Login.vue'
-import CreateUser from '@/pages/users/Create.vue'
+
+import CreateUser from './pages/users/Create.vue'
 import SearchUser from './pages/users/Search.vue'
-import CreateBook from './pages/books/Create.vue'
-import SearchBook from './pages/books/Search.vue'
-import MyBook from './pages/books/MyBooks.vue'
+
+import CreateSwitch from './pages/switches/Create.vue'
+import SearchSwitch from './pages/switches/search.vue'
+import MySwitches from './pages/switches/MySwitches.vue'
+
+import CreatePhoto from './pages/switchPhoto/create.vue'
+import SearchPhoto from './pages/switchPhoto/Search.vue'
+import MyPhotos from './pages/switchPhoto/MySwitchPhotos.vue'
+
 import ForgetPassword from './pages/ForgetPassword.vue'
 
 
@@ -41,23 +48,43 @@ const routes = [
         meta: { authRequired: true }
     },
     {
-        path: '/books',
+        path: '/switches',
         component: Dashboard,
         meta: { authRequired: true }
     },
     {
-        path: '/books/create',
-        component: CreateBook,
+        path: '/switches/create',
+        component: CreateSwitch,
         meta: { authRequired: true }
     },
     {
-        path: '/books/search',
-        component: SearchBook,
+        path: '/switches/search',
+        component: SearchSwitch,
         meta: { authRequired: true }
     },
     {
-        path: '/books/my_books',
-        component: MyBook,
+        path: '/switches/my_switches',
+        component: MySwitches,
+        meta: { authRequired: true }
+    },
+    {
+        path: '/photos',
+        component: Dashboard,
+        meta: { authRequired: true }
+    },
+    {
+        path: '/photos/create',
+        component: CreatePhoto,
+        meta: { authRequired: true }
+    },
+    {
+        path: '/photos/search',
+        component: SearchPhoto,
+        meta: { authRequired: true }
+    },
+    {
+        path: '/photos/my_photos',
+        component: MyPhotos,
         meta: { authRequired: true }
     },
     {

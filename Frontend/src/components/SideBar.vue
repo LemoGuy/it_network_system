@@ -24,7 +24,7 @@ function logout() {
                 </q-avatar>
             </div>
         </q-img>
-      
+
 
         <q-scroll-area style="height: 400px; margin-top: 200px; border-right: 1px solid #ddd">
             <q-list class="top" padding>
@@ -35,7 +35,7 @@ function logout() {
                     </q-item-section>
 
                     <q-item-section>
-                        {{decodedToken.sub }}
+                        {{ decodedToken.sub }}
                     </q-item-section>
                 </q-item>
 
@@ -49,7 +49,7 @@ function logout() {
                         Home
                     </q-item-section>
                 </q-item>
-                <q-expansion-item v-if="decodedToken.role=='Admin'" icon="group" label="Users" :content-inset-level="0.5">
+                <q-expansion-item v-if="decodedToken.role == 'Admin'" icon="group" label="Users" :content-inset-level="0.5">
                     <q-item clickable v-ripple to="/users/create">
 
                         <q-item-section avatar>
@@ -71,9 +71,12 @@ function logout() {
                     </q-item>
 
                 </q-expansion-item>
+
+
+
                 <q-expansion-item icon="library_books" label="Switches" :content-inset-level="0.5">
 
-                    <q-item clickable v-ripple to="/books/create">
+                    <q-item clickable v-ripple to="/switches/create">
 
                         <q-item-section avatar>
                             <q-icon name="add" />
@@ -85,7 +88,7 @@ function logout() {
 
                     </q-item>
 
-                    <q-item clickable v-ripple to="/books/search">
+                    <q-item clickable v-ripple to="/switches/search">
                         <q-item-section avatar>
                             <q-icon name="search" />
                         </q-item-section>
@@ -97,7 +100,7 @@ function logout() {
 
 
 
-                    <q-item clickable v-ripple to="/books/my_books">
+                    <q-item clickable v-ripple to="/switches/my_switches">
 
                         <q-item-section avatar>
                             <q-icon name="list" />
@@ -105,6 +108,46 @@ function logout() {
 
                         <q-item-section>
                             Entered Switches (me)
+                        </q-item-section>
+
+                    </q-item>
+                </q-expansion-item>
+
+
+                <q-expansion-item icon="photo" label="Switch Photos" :content-inset-level="0.5">
+
+                    <q-item clickable v-ripple to="/photos/create">
+
+                        <q-item-section avatar>
+                            <q-icon name="add" />
+                        </q-item-section>
+
+                        <q-item-section>
+                            Add
+                        </q-item-section>
+
+                    </q-item>
+
+                    <q-item clickable v-ripple to="/photos/search">
+                        <q-item-section avatar>
+                            <q-icon name="search" />
+                        </q-item-section>
+
+                        <q-item-section>
+                            Search
+                        </q-item-section>
+                    </q-item>
+
+
+
+                    <q-item clickable v-ripple to="/photos/my_photos">
+
+                        <q-item-section avatar>
+                            <q-icon name="list" />
+                        </q-item-section>
+
+                        <q-item-section>
+                            Entered Switch Photos (me)
                         </q-item-section>
 
                     </q-item>
@@ -131,17 +174,19 @@ function logout() {
     margin-left: auto;
     margin-top: auto;
 }
-.shad{
-    box-shadow: inset -10px -10px 15px rgba(255, 255, 255, 0.5), 
-           inset 10px 10px 15px rgba(70, 70, 70, 0.12);
 
-       }
-       .logo{
+.shad {
+    box-shadow: inset -10px -10px 15px rgba(255, 255, 255, 0.5),
+        inset 10px 10px 15px rgba(70, 70, 70, 0.12);
 
-margin-top: 20px;
 }
-.top{
 
-margin-top: 30px;
+.logo {
+
+    margin-top: 20px;
 }
-</style>
+
+.top {
+
+    margin-top: 30px;
+}</style>

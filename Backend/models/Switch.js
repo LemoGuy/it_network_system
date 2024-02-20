@@ -21,6 +21,10 @@ const switchSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  switchNumber: {
+    type: Number,
+    required: true,
+  },
   model: {
     type: String,
     required: true,
@@ -64,10 +68,6 @@ const portSchema = new mongoose.Schema({
       type: Number,
       required: true,
     },
-    switchNumber: {
-        type: Number,
-        required: true,
-      },
     patchPanelPortNumber: {
         type: String,
         required: true,
