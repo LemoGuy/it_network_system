@@ -74,7 +74,8 @@ function logout() {
 
 
 
-                <q-expansion-item icon="library_books" label="Switches" :content-inset-level="0.5">
+
+                <q-expansion-item icon="hub" label="Servers" :content-inset-level="0.5">
 
                     <q-item clickable v-ripple to="/switches/create">
 
@@ -114,7 +115,153 @@ function logout() {
                 </q-expansion-item>
 
 
-                <q-expansion-item icon="photo" label="Switch Photos" :content-inset-level="0.5">
+
+
+
+
+                <q-expansion-item icon="router" label="Routers" :content-inset-level="0.5">
+
+                    <q-item clickable v-ripple to="/switches/create">
+
+                        <q-item-section avatar>
+                            <q-icon name="add" />
+                        </q-item-section>
+
+                        <q-item-section>
+                            Add
+                        </q-item-section>
+
+                    </q-item>
+
+                    <q-item clickable v-ripple to="/switches/search">
+                        <q-item-section avatar>
+                            <q-icon name="search" />
+                        </q-item-section>
+
+                        <q-item-section>
+                            Search
+                        </q-item-section>
+                    </q-item>
+
+
+
+                    <q-item clickable v-ripple to="/switches/my_switches">
+
+                        <q-item-section avatar>
+                            <q-icon name="list" />
+                        </q-item-section>
+
+                        <q-item-section>
+                            Entered Switches (me)
+                        </q-item-section>
+
+                    </q-item>
+                </q-expansion-item>
+
+
+
+
+                <q-expansion-item icon="display_settings" label="Switches" :content-inset-level="0.5">
+
+                    <q-item clickable v-ripple to="/switches/create">
+
+                        <q-item-section avatar>
+                            <q-icon name="add" />
+                        </q-item-section>
+
+                        <q-item-section>
+                            Add
+                        </q-item-section>
+
+                    </q-item>
+
+                    <q-item clickable v-ripple to="/switches/search">
+                        <q-item-section avatar>
+                            <q-icon name="search" />
+                        </q-item-section>
+
+                        <q-item-section>
+                            Search
+                        </q-item-section>
+                    </q-item>
+
+
+
+                    <q-item clickable v-ripple to="/switches/my_switches">
+
+                        <q-item-section avatar>
+                            <q-icon name="list" />
+                        </q-item-section>
+
+                        <q-item-section>
+                            Entered Switches (me)
+                        </q-item-section>
+
+                    </q-item>
+                </q-expansion-item>
+
+
+
+
+
+
+                <q-expansion-item icon="wifi" label="Access Points" :content-inset-level="0.5">
+
+                    <q-item clickable v-ripple to="/switches/create">
+
+                        <q-item-section avatar>
+                            <q-icon name="add" />
+                        </q-item-section>
+
+                        <q-item-section>
+                            Add
+                        </q-item-section>
+
+                    </q-item>
+
+                    <q-item clickable v-ripple to="/switches/search">
+                        <q-item-section avatar>
+                            <q-icon name="search" />
+                        </q-item-section>
+
+                        <q-item-section>
+                            Search
+                        </q-item-section>
+                    </q-item>
+
+
+
+                    <q-item clickable v-ripple to="/switches/my_switches">
+
+                        <q-item-section avatar>
+                            <q-icon name="list" />
+                        </q-item-section>
+
+                        <q-item-section>
+                            Entered Switches (me)
+                        </q-item-section>
+
+                    </q-item>
+                </q-expansion-item>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <q-expansion-item icon="photo" label="Photos" :content-inset-level="0.5">
 
                     <q-item clickable v-ripple to="/photos/create">
 
@@ -189,4 +336,5 @@ function logout() {
 .top {
 
     margin-top: 30px;
-}</style>
+}
+</style>

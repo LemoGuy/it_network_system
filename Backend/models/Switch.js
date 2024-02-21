@@ -45,9 +45,13 @@ const switchSchema = new mongoose.Schema({
   },
   ports: {
     type: [portSchema],
-    required: true,
+    required: false,
   },
   ipAddress: {
+    type: String,
+    required: true,
+  },
+  subnet: {
     type: String,
     required: true,
   },
@@ -66,19 +70,19 @@ const switchSchema = new mongoose.Schema({
 const portSchema = new mongoose.Schema({
     portNumber: {
       type: Number,
-      required: true,
+      required: false,
     },
     patchPanelPortNumber: {
         type: String,
-        required: true,
+        required: false,
       },
     roomNumber: {
       type: String,
-      required: true,
+      required: false,
     },
     batchNumberOnWall: {
         type: String,
-        required: true,
+        required: false,
       },
   });
 

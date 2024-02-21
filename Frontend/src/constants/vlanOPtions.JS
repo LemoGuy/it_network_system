@@ -1,4 +1,5 @@
 export default [
-    { value: "Internet", label: 'Internet' },
-    { value: "Tell", label: 'Tell' }
+    { value: "Student", label: 'Student' },
+    { value: "Security", label: 'Security' },
+    { value: "Camera", label: 'Camera' }
 ]

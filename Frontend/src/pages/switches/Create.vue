@@ -6,6 +6,11 @@ import backend from '../../services/backend'
 import resIsOk from '../../utils/resIsOk'
 import { useRouter } from 'vue-router'
 import { token, setToken } from '../../services/token.js'
+import buildingOptions from '../../constants/buildingOptions'
+import floorOptions from '../../constants/floorOptions'
+import brandOptions from '../../constants/brandOptions'
+import vlanOptions from '../../constants/vlanOptions'
+import switchOptions from '../../constants/switchOptions'
 
 const router = useRouter()
 
@@ -18,14 +23,25 @@ async function create() {
 
     const formData = new FormData();
 
-    if (!data.value.name || !data.value.switchData) {
+    if (!data.value.building || !data.value.floor || !data.room || !data.shelfNumber || !data.name || !data.model || !data.brand || !data.macAddress || !data.serialNumber || !data.ipAddress || !data.subnet || !data.vlan || !data.firmwareVersion || !data.portType ) {
         $q.notify('All fields must be filled!')
         return
     }
 
-    formData.append('name', data.value.name || '')
-    formData.append('switchData', data.value.switchData)
-
+    formData.append('building', data.value.building)
+    formData.append('floor', data.value.floor)
+    formData.append('room', data.value.room)
+    formData.append('shelfNumber', data.value.shelfNumber)
+    formData.append('name', data.value.name)
+    formData.append('model', data.value.model)
+    formData.append('brand', data.value.brand)
+    formData.append('macAddress', data.value.macAddress)
+    formData.append('serialNumber', data.value.serialNumber)
+    formData.append('ipAddress', data.value.ipAddress)
+    formData.append('subnet', data.value.subnet)
+    formData.append('vlan', data.value.vlan)
+    formData.append('firmwareVerison', data.value.firmwareVerison)
+    formData.append('portType', data.value.portType)
 
     let dataEntered
     try {
@@ -40,14 +56,9 @@ async function create() {
         if (e.response.data.message) $q.notify(e.response.data.message)
 
     }
-
-
 }
 
 </script>
-
-
-
 
 <template>
     <Layout>
@@ -59,70 +70,48 @@ async function create() {
 
             <div class="input-container">
 
-                <fieldset class="title">
-                    <legend>Location Details</legend>
-
+                    <q-select outlined class='input-field' v-model='data.building' label='Building' :options="buildingOptions"
+                    emit-value :rules="[val => !!val || 'Field is required']" />
                   
-                    <q-input outlined class="input-field" v-model="data.building" label="Building"
-                        :rules="[val => !!val || 'Field is required']" />
-
-                    <q-input outlined class="input-field" v-model="data.floor" label="Floor"
-                        :rules="[val => !!val || 'Field is required']" />
-
+                    <q-select outlined class='input-field' v-model='data.floor' label='Floor' :options="floorOptions"
+                    emit-value :rules="[val => !!val || 'Field is required']" />
+                  
                     <q-input outlined class="input-field" v-model="data.room" label="Room"
                         :rules="[val => !!val || 'Field is required']" />
 
                     <q-input outlined class="input-field" v-model="data.shelfNumber" label="Shelf Number"
                         :rules="[val => !!val || 'Field is required']" />
 
-                </fieldset>
-
-                <fieldset class="title">
-                    <legend>Switch Details</legend>
-
                     <q-input outlined class="input-field" v-model="data.name" label="Name"
                         :rules="[val => !!val || 'Field is required']" />
 
                     <q-input outlined class="input-field" v-model="data.model" label="Model"
                         :rules="[val => !!val || 'Field is required']" />
-                    <q-input outlined class="input-field" v-model="data.brand" label="Brand"
-                        :rules="[val => !!val || 'Field is required']" />
+
+                    <q-select outlined class='input-field' v-model='data.brand' label='Brand' :options="brandOptions"
+                    emit-value :rules="[val => !!val || 'Field is required']" />
+                  
                     <q-input outlined class="input-field" v-model="data.macAddress" label="MAC Address"
                         :rules="[val => !!val || 'Field is required']" />
                     <q-input outlined class="input-field" v-model="data.serialNumber" label="Serial Number"
                         :rules="[val => !!val || 'Field is required']" />
-                    <q-input outlined class="input-field" v-model="data.ipAddress" label="IP Address"
+                    <q-input outlined class="ip" v-model="data.ipAddress" label="IP Address"
                         :rules="[val => !!val || 'Field is required']" />
-                    <q-input outlined class="input-field" v-model="data.vlan" label="VLAN"
+
+                        <q-input outlined class="subnet" v-model="data.subnet" label="Subnet"
                         :rules="[val => !!val || 'Field is required']" />
+
+                        <q-select outlined class='input-field' v-model='data.vlan' label='VLAN' :options="vlanOptions"
+                    emit-value :rules="[val => !!val || 'Field is required']" />
+                  
                     <q-input outlined class="input-field" v-model="data.firmwareVersion" label="Firmware Version"
                         :rules="[val => !!val || 'Field is required']" />
-                    <q-input outlined class="input-field" v-model="data.portType" label="Port Type"
-                        :rules="[val => !!val || 'Field is required']" />
 
-                </fieldset>
-
-                <fieldset class="title">
-                    <legend>Port Details</legend>
-
-                    <q-input outlined class="input-field" v-model="data.portNumber" label="Port Number"
-                        :rules="[val => !!val || 'Field is required']" />
-                    <q-input outlined class="input-field" v-model="data.patchPanelPortNumber" label="Patch Panel Port Number"
-                        :rules="[val => !!val || 'Field is required']" />
-                    <q-input outlined class="input-field" v-model="data.roomNumber" label="Goes to (Room Number)"
-                        :rules="[val => !!val || 'Field is required']" />
-                    <q-input outlined class="input-field" v-model="data.batchNumberOnWall" label="Batch Number On Wall"
-                        :rules="[val => !!val || 'Field is required']" />
-
-                </fieldset>
-
+                        <q-select outlined class='input-field' v-model='data.portType' label='Port Type' :options="switchOptions"
+                    emit-value :rules="[val => !!val || 'Field is required']" />
             </div>
 
-
-
-
-
-            <q-btn class='create-btn' label='Upload' @click='create()' />
+            <q-btn class='create-btn' label='Add' @click='create()' />
         </q-card>
     </Layout>
 </template>
@@ -134,36 +123,19 @@ async function create() {
 
 
 <style scoped>
-.address {
-    width: 520px;
+
+.ip {
+    width: 220px;
+    display: inline-block;
 }
 
-.whitten {
-    box-shadow: inset 2000px 0 0 0 rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.5);
-    border-color: rgba(255, 255, 255, 1);
-    padding-top: 0px;
-    font-size: 12pt;
-}
-
-.note {
-    margin-top: 50px;
+.subnet {
+    width: 77px;
+    display: inline-block;
 }
 
 .title {
     font-size: 15pt;
-}
-
-.pp {
-    width: 70% !important;
-}
-
-.ppp {
-    margin-top: 0px;
-}
-
-.m {
-    margin-top: 32px !important;
 }
 
 .container {
@@ -188,35 +160,10 @@ async function create() {
     gap: 20px
 }
 
-.gender-select {
-    display: flex;
-    align-items: center;
-    height: 56px;
-}
-
-.birthdate-input {
-    padding: 0;
-}
-
-.gender-select>p {
-    margin: 0;
-    font-size: 12pt;
-}
-
-.password-container {
-    display: flex;
-    align-items: stretch;
-    gap: 20px
-}
-
-.password-container>* {
-    flex: 1
-}
-
 .create-btn {
     margin-left: auto;
-    margin-top: 50px;
-    width: 100px;
+    margin-right: auto;
+    width: 200px;
 }
 
 .input-field {
