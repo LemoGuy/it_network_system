@@ -81,7 +81,8 @@ router.post('/', async (req, res) => {
 
     let data = { ...req.body }; // get the post data
 
-    if (!data.value.building || !data.value.floor || !data.room || !data.shelfNumber || !data.name || !data.model || !data.brand || !data.macAddress || !data.serialNumber || !data.ipAddress || !data.subnet || !data.vlan || !data.firmwareVersion || !data.portType ) {
+    console.log(req.body)
+    if (!data.building || !data.floor || !data.room || !data.shelfNumber || !data.name || !data.model || !data.brand || !data.macAddress || !data.serialNumber || !data.ipAddress || !data.subnet || !data.vlan || !data.firmwareVersion || !data.portType ) {
         res.status(400).json({
             message: 'Form is not compelete!'
         })
@@ -90,17 +91,17 @@ router.post('/', async (req, res) => {
 
     try {
         await Switch.create(data); // instert into db
+        console.log("cratting!!")
         res.sendStatus(201); // give OK status
     } catch (e) {
-        if (e.code == 11000) {
+        console.log(e)
+
             let msg = 'Error'
-            if ('email' in e.keyPattern) msg = 'Entered Email already exists!' 
-            else if('username' in e.keyPattern) msg = 'Entered Username already exists!'
-            res.status(400).json({
-                message: msg
-            })
-            return
-        }
+
+        res.status(400).json({
+            message: msg
+        })
+        return
     }
 
 });

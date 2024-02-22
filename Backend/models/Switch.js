@@ -1,5 +1,24 @@
 const mongoose = require('mongoose');
 
+const portSchema = new mongoose.Schema({
+  portNumber: {
+    type: Number,
+    required: true,
+  },
+  patchPanelPortNumber: {
+      type: String,
+      required: true,
+    },
+  roomNumber: {
+    type: String,
+    required: true,
+  },
+  batchNumberOnWall: {
+      type: String,
+      required: true,
+    },
+});
+
 const switchSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -19,10 +38,6 @@ const switchSchema = new mongoose.Schema({
   },
   shelfNumber: {
     type: String,
-    required: true,
-  },
-  switchNumber: {
-    type: Number,
     required: true,
   },
   model: {
@@ -45,7 +60,7 @@ const switchSchema = new mongoose.Schema({
   },
   ports: {
     type: [portSchema],
-    required: false,
+    required: true,
   },
   ipAddress: {
     type: String,
@@ -56,7 +71,7 @@ const switchSchema = new mongoose.Schema({
     required: true,
   },
   vlan: {
-    type: Number,
+    type: String,
     required: true,
   },
   firmwareVersion: {
@@ -67,24 +82,7 @@ const switchSchema = new mongoose.Schema({
   }
 });
 
-const portSchema = new mongoose.Schema({
-    portNumber: {
-      type: Number,
-      required: false,
-    },
-    patchPanelPortNumber: {
-        type: String,
-        required: false,
-      },
-    roomNumber: {
-      type: String,
-      required: false,
-    },
-    batchNumberOnWall: {
-        type: String,
-        required: false,
-      },
-  });
+
 
 const Switch = mongoose.model('Switch', switchSchema);
 

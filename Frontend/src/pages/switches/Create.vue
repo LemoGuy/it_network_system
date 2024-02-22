@@ -23,29 +23,27 @@ async function create() {
 
     const formData = new FormData();
 
-    if (!data.value.building || !data.value.floor || !data.room || !data.shelfNumber || !data.name || !data.model || !data.brand || !data.macAddress || !data.serialNumber || !data.ipAddress || !data.subnet || !data.vlan || !data.firmwareVersion || !data.portType ) {
+    if (!data.value.building 
+        || !data.value.floor 
+        || !data.value.room 
+        || !data.value.shelfNumber 
+        || !data.value.name 
+        || !data.value.model 
+        || !data.value.brand 
+        || !data.value.macAddress 
+        || !data.value.serialNumber 
+        || !data.value.ipAddress 
+        || !data.value.subnet 
+        || !data.value.vlan 
+        || !data.value.firmwareVersion 
+        || !data.value.portType ) {
         $q.notify('All fields must be filled!')
         return
     }
 
-    formData.append('building', data.value.building)
-    formData.append('floor', data.value.floor)
-    formData.append('room', data.value.room)
-    formData.append('shelfNumber', data.value.shelfNumber)
-    formData.append('name', data.value.name)
-    formData.append('model', data.value.model)
-    formData.append('brand', data.value.brand)
-    formData.append('macAddress', data.value.macAddress)
-    formData.append('serialNumber', data.value.serialNumber)
-    formData.append('ipAddress', data.value.ipAddress)
-    formData.append('subnet', data.value.subnet)
-    formData.append('vlan', data.value.vlan)
-    formData.append('firmwareVerison', data.value.firmwareVerison)
-    formData.append('portType', data.value.portType)
-
     let dataEntered
     try {
-        dataEntered = await backend.post(`/switch`, formData, {
+        dataEntered = await backend.post(`/switch`, data.value, {
             headers: {
                 Authorization: `Bearer ${token.value}`,
             }
