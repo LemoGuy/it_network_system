@@ -51,7 +51,7 @@ async function create() {
     <Layout>
         <q-card class="container">
             <p class="title">
-                Upload a photo
+                Upload a photo11111111
             </p>
             <div class="input-container">
 

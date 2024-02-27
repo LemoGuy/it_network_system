@@ -64,11 +64,9 @@ function handleLoginEntry(e) {
 .login-form {
   display: flex;
   flex-direction: column;
-  background-color: #f1cf8f;
-  padding-bottom: 41.5px;
+  padding-bottom: 50px;
 }
 .shad{
-  color: #F8AC1B;
   margin-top: 0px;
   padding-top: 0px;
   display: inline-block;
@@ -81,7 +79,7 @@ function handleLoginEntry(e) {
   display: flex;
   width: 400px;
   margin: auto;
-  margin-top: 25px;
+  margin-top: 150px;
   box-shadow: 10px 18px 50px 6px #414141 ;
 }
 

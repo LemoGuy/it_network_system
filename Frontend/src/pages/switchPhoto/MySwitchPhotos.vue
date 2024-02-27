@@ -141,7 +141,8 @@ async function deletePhoto(id) {
 </template>
 
 <style scoped>
-.table>>>th {
+.table :deep(th) {
+
     font-weight: bold !important;
 }
 

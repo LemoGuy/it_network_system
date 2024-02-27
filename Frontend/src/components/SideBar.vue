@@ -18,7 +18,7 @@ function logout() {
 </script>
 <template>
     <q-drawer v-model="props.open" show-if-above :width="235" :breakpoint="400">
-        <q-img class="absolute-top logo" src="../../public/images/logo.png" style="height: 200px">
+        <q-img class="absolute-top logo" src="../../images/logo.png" style="height: 200px">
             <div class="absolute-top  bg-transparent">
                 <q-avatar size="150px" class="row q-ml-auto q-mr-auto">
                 </q-avatar>
@@ -26,7 +26,7 @@ function logout() {
         </q-img>
 
 
-        <q-scroll-area style="height: 400px; margin-top: 200px; border-right: 1px solid #ddd">
+        <q-scroll-area style="height: 550px; margin-top: 200px; border-right: 1px solid #ddd">
             <q-list class="top" padding>
 
                 <q-item>
@@ -300,19 +300,42 @@ function logout() {
                     </q-item>
                 </q-expansion-item>
 
+                <q-item clickable v-ripple to="/"> <!-- add path for settings page -->
+                    <q-item-section avatar>
+                        <q-icon name="settings" />
+                    </q-item-section>
+
+                    <q-item-section>
+                        Settings
+                    </q-item-section>
+                </q-item>
+
+                <q-item clickable v-ripple to="/"> <!-- add path for help page -->
+                    <q-item-section avatar>
+                        <q-icon name="help" />
+                    </q-item-section>
+
+                    <q-item-section>
+                        Help
+                    </q-item-section>
+                </q-item>
+
+                <q-item class="shad" clickable v-ripple @click="logout()">
+                    <q-item-section avatar>
+                        <q-icon name="logout" />
+                    </q-item-section>
+
+                    <q-item-section>
+                        Logout
+                    </q-item-section>
+                </q-item>
+
+
             </q-list>
 
 
         </q-scroll-area>
-        <q-item class="absolute-bottom shad" clickable v-ripple @click="logout()">
-            <q-item-section avatar>
-                <q-icon name="logout" />
-            </q-item-section>
 
-            <q-item-section>
-                Logout
-            </q-item-section>
-        </q-item>
     </q-drawer>
 </template>
 
@@ -326,15 +349,5 @@ function logout() {
     box-shadow: inset -10px -10px 15px rgba(255, 255, 255, 0.5),
         inset 10px 10px 15px rgba(70, 70, 70, 0.12);
 
-}
-
-.logo {
-
-    margin-top: 20px;
-}
-
-.top {
-
-    margin-top: 30px;
 }
 </style>

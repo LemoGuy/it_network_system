@@ -159,7 +159,8 @@ const handleSearch = (e) => {
 </template>
 
 <style scoped>
-.table>>>th {
+.table :deep(th) {
+
     font-weight: bold !important;
 }
 

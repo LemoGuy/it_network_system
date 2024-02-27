@@ -21,7 +21,6 @@ const drawer = ref(true)
 <style scoped>
 .layout {
     min-height: 300px;
-    background-image: url(./images/background.png);
     background-repeat: no-repeat;
     background-size: cover;
 }

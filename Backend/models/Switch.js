@@ -24,6 +24,8 @@ const switchSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  // uploadedBy: { type: mongoose.Types.ObjectId, required: true },
+  // uploadDate: { type: Date, required: true, default: Date.now },
   building: {
     type: String,
     required: true,
