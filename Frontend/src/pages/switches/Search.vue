@@ -47,18 +47,18 @@ const columns = [
         required: true,
         label: 'Uploaded By',
         align: 'left',
-        field: f => f.uploadedBy.name,
+        field: 'uploadedBy.name',
         sortable: true
     },
 
-    {
-        name: 'uploadDate',
-        required: true,
-        label: 'Uploaded Date',
-        align: 'left',
-        field: 'uploadDate',
-        sortable: true
-    },
+    // {
+    //     name: 'uploadDate',
+    //     required: true,
+    //     label: 'Uploaded Date',
+    //     align: 'left',
+    //     field: 'uploadDate',
+    //     sortable: true
+    // },
     {
         name: 'open',
     },
@@ -74,13 +74,14 @@ onMounted(async () => {
             'Authorization': `Bearer ${token.value}`
         }
     })
-    if (resIsOk) {
+    if (resIsOk(res)) {
         let data = res.data
-        for (let i = 0; i < data.length; i++) {
-            let formatedDate = new Date(data[i].uploadDate)
-            formatedDate = dateFormat(formatedDate, 'dddd, mmmm dS, yyyy, h:MM:ss TT')
-            data[i].uploadDate = formatedDate
-        }
+        // for (let i = 0; i < data.length; i++) {
+        //     console.log(data[i])
+        //     let formatedDate = new Date(data[i].uploadDate)
+        //     formatedDate = dateFormat(formatedDate, 'dddd, mmmm dS, yyyy, h:MM:ss TT')
+        //     data[i].uploadDate = formatedDate
+        // }
         switches.value = data
         filteredSwitches.value = data
         fuse = new Fuse(data, {
@@ -99,10 +100,6 @@ const handleSearch = (e) => {
     filteredSwitches.value = newfilteredSwitches;
 }
 
-const getFileUrl = (row) => {
-    return `${backendUrl}file/${row.randomToken}-${row.switchHash}.${row.switchFileType}`
-}
-
 
 async function deleteSwitch(id) {
     let res = await backend.delete(`/switch/${id}`, {
@@ -116,21 +113,6 @@ async function deleteSwitch(id) {
         fuse = new Fuse(switches.value, {
             keys: ['name', 'uploadedBy.name']
         });
-    }
-
-}
-
-const openFile = async (url) => {
-    try {
-        let res = await backend.get('/login/tempauth', {
-            headers: {
-                'Authorization': `Bearer ${token.value}`
-            }
-        })
-        console.log(res.data)
-        window.open(url + `?auth=${res.data.token}`, '_blank').focus()
-    } catch (e) {
-        console.log('failed')
     }
 
 }

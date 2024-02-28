@@ -79,7 +79,7 @@ router.post('/', async (req, res) => {
     }
 
 
-    let data = { ...req.body }; // get the post data
+    let data = { ...req.body, uploadedBy: req.user._id }; // get the post data
 
     console.log(req.body)
     if (!data.building || !data.floor || !data.room || !data.shelfNumber || !data.name || !data.model || !data.brand || !data.macAddress || !data.serialNumber || !data.ipAddress || !data.subnet || !data.vlan || !data.firmwareVersion || !data.portType ) {
