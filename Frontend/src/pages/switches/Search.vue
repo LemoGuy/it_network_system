@@ -47,7 +47,7 @@ const columns = [
         required: true,
         label: 'Uploaded By',
         align: 'left',
-        field: 'uploadedBy.name',
+        field: 'uploadedBy',
         sortable: true
     },
 
