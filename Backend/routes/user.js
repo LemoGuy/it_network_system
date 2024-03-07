@@ -224,8 +224,6 @@ router.delete('/:id', async (req, res) => {
         return
     }
     await User.deleteOne({ _id: req.params.id });
-    let books = await Book.find({ uploadedBy: mongoose.Types.ObjectId(req.params.id) })
-    books.forEach(deleteBook)
     res.sendStatus(200)
 })
 

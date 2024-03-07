@@ -23,14 +23,14 @@ const pageOptions = {
 }
 
 const columns = [
-    // {
-    //     name: 'id',
-    //     required: true,
-    //     label: 'ID',
-    //     align: 'left',
-    //     field: '_id',
-    //     sortable: true
-    // },
+    {
+        name: 'id',
+        required: true,
+        label: 'ID',
+        align: 'left',
+        field: '_id',
+        sortable: true
+    },
     {
         name: 'name',
         required: true,
@@ -51,14 +51,15 @@ const columns = [
         sortable: true
     },
 
-    // {
-    //     name: 'uploadDate',
-    //     required: true,
-    //     label: 'Uploaded Date',
-    //     align: 'left',
-    //     field: 'uploadDate',
-    //     sortable: true
-    // },
+    {
+        name: 'uploadDate',
+        required: true,
+        label: 'Uploaded Date',
+        align: 'left',
+        field: 'uploadDate',
+        format: v => dateFormat(v, 'dddd, mmmm dS, yyyy, h:MM:ss TT'),
+        sortable: true
+    },
     {
         name: 'open',
     },

@@ -1,6 +1,7 @@
-const bcrypt = require('bcryptjs')
+import switchValidater from "./validator/switchValidater.js";
 
+const data = {
+    ipAddress: "1192.168.1.1"
+}
 
-let hash = bcrypt.hashSync('12345678', bcrypt.genSaltSync(10))
-
-console.log(hash)
+console.log(switchValidater.safeParse(data).error);

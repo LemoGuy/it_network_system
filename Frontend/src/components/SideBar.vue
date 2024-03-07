@@ -77,7 +77,7 @@ function logout() {
 
                 <q-expansion-item icon="hub" label="Servers" :content-inset-level="0.5">
 
-                    <q-item clickable v-ripple to="/switches/create">
+                    <q-item clickable v-ripple to="/dashboard">
 
                         <q-item-section avatar>
                             <q-icon name="add" />
@@ -89,7 +89,7 @@ function logout() {
 
                     </q-item>
 
-                    <q-item clickable v-ripple to="/switches/search">
+                    <q-item clickable v-ripple to="/dashboard">
                         <q-item-section avatar>
                             <q-icon name="search" />
                         </q-item-section>
@@ -99,19 +99,6 @@ function logout() {
                         </q-item-section>
                     </q-item>
 
-
-
-                    <q-item clickable v-ripple to="/switches/my_switches">
-
-                        <q-item-section avatar>
-                            <q-icon name="list" />
-                        </q-item-section>
-
-                        <q-item-section>
-                            Entered Switches (me)
-                        </q-item-section>
-
-                    </q-item>
                 </q-expansion-item>
 
 
@@ -121,7 +108,7 @@ function logout() {
 
                 <q-expansion-item icon="router" label="Routers" :content-inset-level="0.5">
 
-                    <q-item clickable v-ripple to="/switches/create">
+                    <q-item clickable v-ripple to="/dashboard">
 
                         <q-item-section avatar>
                             <q-icon name="add" />
@@ -133,7 +120,7 @@ function logout() {
 
                     </q-item>
 
-                    <q-item clickable v-ripple to="/switches/search">
+                    <q-item clickable v-ripple to="/dashboard">
                         <q-item-section avatar>
                             <q-icon name="search" />
                         </q-item-section>
@@ -143,19 +130,6 @@ function logout() {
                         </q-item-section>
                     </q-item>
 
-
-
-                    <q-item clickable v-ripple to="/switches/my_switches">
-
-                        <q-item-section avatar>
-                            <q-icon name="list" />
-                        </q-item-section>
-
-                        <q-item-section>
-                            Entered Switches (me)
-                        </q-item-section>
-
-                    </q-item>
                 </q-expansion-item>
 
 
@@ -184,20 +158,6 @@ function logout() {
                             Search
                         </q-item-section>
                     </q-item>
-
-
-
-                    <q-item clickable v-ripple to="/switches/my_switches">
-
-                        <q-item-section avatar>
-                            <q-icon name="list" />
-                        </q-item-section>
-
-                        <q-item-section>
-                            Entered Switches (me)
-                        </q-item-section>
-
-                    </q-item>
                 </q-expansion-item>
 
 
@@ -207,7 +167,7 @@ function logout() {
 
                 <q-expansion-item icon="wifi" label="Access Points" :content-inset-level="0.5">
 
-                    <q-item clickable v-ripple to="/switches/create">
+                    <q-item clickable v-ripple to="/dashboard">
 
                         <q-item-section avatar>
                             <q-icon name="add" />
@@ -219,7 +179,7 @@ function logout() {
 
                     </q-item>
 
-                    <q-item clickable v-ripple to="/switches/search">
+                    <q-item clickable v-ripple to="/dashboard">
                         <q-item-section avatar>
                             <q-icon name="search" />
                         </q-item-section>
@@ -229,19 +189,6 @@ function logout() {
                         </q-item-section>
                     </q-item>
 
-
-
-                    <q-item clickable v-ripple to="/switches/my_switches">
-
-                        <q-item-section avatar>
-                            <q-icon name="list" />
-                        </q-item-section>
-
-                        <q-item-section>
-                            Entered Switches (me)
-                        </q-item-section>
-
-                    </q-item>
                 </q-expansion-item>
 
 

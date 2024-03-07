@@ -10,7 +10,6 @@ import SearchUser from './pages/users/Search.vue'
 
 import CreateSwitch from './pages/switches/Create.vue'
 import SearchSwitch from './pages/switches/search.vue'
-import MySwitches from './pages/switches/MySwitches.vue'
 
 import CreatePhoto from './pages/switchPhoto/create.vue'
 import SearchPhoto from './pages/switchPhoto/Search.vue'
@@ -63,11 +62,6 @@ const routes = [
         meta: { authRequired: true }
     },
     {
-        path: '/switches/my_switches',
-        component: MySwitches,
-        meta: { authRequired: true }
-    },
-    {
         path: '/photos',
         component: Dashboard,
         meta: { authRequired: true }
@@ -110,7 +104,7 @@ app.use(router)
 app.use(Quasar, {
     plugins: {
         Notify
-    }, // import Quasar plugins and add here
+    }, // import Quasar plugins and add them here..!!
 })
 
 app.mount('#app')

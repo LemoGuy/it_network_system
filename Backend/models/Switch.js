@@ -25,7 +25,7 @@ const switchSchema = new mongoose.Schema({
     required: true,
   },
   uploadedBy: { type: mongoose.Types.ObjectId, required: true },
-  // uploadDate: { type: Date, required: true, default: Date.now },
+  uploadDate: { type: Date, required: true },
   building: {
     type: String,
     required: true,
@@ -62,7 +62,6 @@ const switchSchema = new mongoose.Schema({
   },
   ports: {
     type: [portSchema],
-    required: true,
   },
   ipAddress: {
     type: String,
