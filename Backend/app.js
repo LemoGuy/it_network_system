@@ -47,7 +47,7 @@ app.use(passport.session());
 
 app.get('/', (req, res) => res.redirect('/login'));
 app.use('/login', require('./routes/login.js'));
-app.use('/photo',passport.authenticate('jwt', {session: false}),  require('./routes/photo.js'));
+// app.use('/photo',passport.authenticate('jwt', {session: false}),  require('./routes/photo.js'));
 app.use('/switch',passport.authenticate('jwt', {session: false}),  require('./routes/switch.js'));
 app.use('/user', passport.authenticate('jwt', {session: false}), require('./routes/user.js'));
 

@@ -9,13 +9,14 @@ import CreateUser from './pages/users/Create.vue'
 import SearchUser from './pages/users/Search.vue'
 
 import CreateSwitch from './pages/switches/Create.vue'
-import SearchSwitch from './pages/switches/search.vue'
+import SearchSwitch from './pages/switches/Search.vue'
+import ViewSwitch from './pages/switches/View.vue'
 
-import CreatePhoto from './pages/switchPhoto/create.vue'
-import SearchPhoto from './pages/switchPhoto/Search.vue'
-import MyPhotos from './pages/switchPhoto/MySwitchPhotos.vue'
+// import CreatePhoto from './pages/switchPhoto/create.vue'
+// import SearchPhoto from './pages/switchPhoto/Search.vue'
+// import MyPhotos from './pages/switchPhoto/MySwitchPhotos.vue'
 
-import ForgetPassword from './pages/ForgetPassword.vue'
+// import ForgetPassword from './pages/ForgetPassword.vue'
 
 
 import { Quasar, Notify } from 'quasar'
@@ -61,30 +62,44 @@ const routes = [
         component: SearchSwitch,
         meta: { authRequired: true }
     },
+
     {
-        path: '/photos',
-        component: Dashboard,
+        path: '/switches/view',
+        component: ViewSwitch,
         meta: { authRequired: true }
     },
-    {
-        path: '/photos/create',
-        component: CreatePhoto,
-        meta: { authRequired: true }
-    },
-    {
-        path: '/photos/search',
-        component: SearchPhoto,
-        meta: { authRequired: true }
-    },
-    {
-        path: '/photos/my_photos',
-        component: MyPhotos,
-        meta: { authRequired: true }
-    },
-    {
-        path: '/forget_password',
-        component: ForgetPassword,
-    }
+
+
+
+
+
+
+
+
+    // {
+    //     path: '/photos',
+    //     component: Dashboard,
+    //     meta: { authRequired: true }
+    // },
+    // {
+    //     path: '/photos/create',
+    //     component: CreatePhoto,
+    //     meta: { authRequired: true }
+    // },
+    // {
+    //     path: '/photos/search',
+    //     component: SearchPhoto,
+    //     meta: { authRequired: true }
+    // },
+    // {
+    //     path: '/photos/my_photos',
+    //     component: MyPhotos,
+    //     meta: { authRequired: true }
+    // },
+    // {
+    //     path: '/forget_password',
+    //     component: ForgetPassword,
+    // }
 ]
 
 const router = createRouter({

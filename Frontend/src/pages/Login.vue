@@ -41,6 +41,8 @@ function handleLoginEntry(e) {
 </script>
 
 <template>
+	<q-card>
+
   <div class="login-form" v-on:keydown="handleLoginEntry">
     <q-card class="input-container">
       <img class='login-image' src="/images/logo.png" alt="no pic">
@@ -49,15 +51,18 @@ function handleLoginEntry(e) {
 	  <!-- v-model="credentials.password" -->
 
       <div class="login-container">
-        <router-link class="shad" to="/forget_password">Help!</router-link>
+        <!-- <router-link class="shad" to="/forget_password">Help!</router-link> -->
         <!-- <q-checkbox label="Remember me" v-model="rememberMe" /> -->
-        <q-btn class="login-btn button button--moema button--inverted button--text-thick button--size-s" @click="submit()">Login</q-btn>
+        <q-btn  @click="submit()">Login</q-btn>
 
       </div>
     
     </q-card>
 
   </div>
+
+	</q-card>
+
 </template>
 
 <style scoped>
@@ -80,7 +85,6 @@ function handleLoginEntry(e) {
   width: 400px;
   margin: auto;
   margin-top: 150px;
-  box-shadow: 10px 18px 50px 6px #414141 ;
 }
 
 .login-btn {

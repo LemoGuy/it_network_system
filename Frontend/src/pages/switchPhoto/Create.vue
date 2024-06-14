@@ -51,7 +51,7 @@ async function create() {
     <Layout>
         <q-card class="container">
             <p class="title">
-                Upload a photo11111111
+                
             </p>
             <div class="input-container">
 
@@ -67,22 +67,10 @@ async function create() {
 
         <div class="container pp whitten m">
           
-          <div>
+        
 
       </div>
-                  <div class="input-container">
-                      <div>
-                        <div class="note ppp"><p class="text-h6">Note:</p><p class="text-weight-bold">Please be informed that no user has the authority to conclude any legally binding agreement without the
-                explicit written consent from the University of Kurdistan Hewler. Our University accepts no liability for
-                the content of the files uploaded here, or for the consequences of any actions taken on the basis of the information
-                provided, unless that information is subsequently confirmed in writing. If you are not accepting the agreenment, you are notified that disclosing, copying, distributing or taking any action in reliance on the
-                contents of this information is strictly prohibited.</p>
-        </div>
-              </div>
-                  </div>
-                </div>
-
-        
+           
 
     </Layout>
 </template>

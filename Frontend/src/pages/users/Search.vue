@@ -170,7 +170,6 @@ const handleSearch = (e) => {
     margin-bottom: 25px;
     padding: 25px;
     flex-wrap: wrap;
-    box-shadow: 10px 20px 50px 6px #1e1d1d ;
 }
 
 .filter-container>* {
@@ -181,8 +180,5 @@ const handleSearch = (e) => {
     width: 125px;
 
 }
-.shad{
-     box-shadow: 10px 20px 50px 6px #1e1d1d ;
 
-}
 </style>

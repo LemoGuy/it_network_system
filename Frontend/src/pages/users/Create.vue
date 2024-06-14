@@ -49,7 +49,7 @@ onMounted(async () => {
     <Layout>
         <q-card class="container">
             <p class="title">
-                Create an account
+                Account details
             </p>
             <div class="input-container">
 
@@ -90,7 +90,6 @@ onMounted(async () => {
 .container {
     display: flex;
     flex-direction: column;
-    box-shadow: 10px 20px 50px 6px #1e1d1d ;
 
 
     /* border: 1px solid grey; */
