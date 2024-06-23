@@ -1,188 +1,169 @@
-<template>
-  <div class="q-pa-md">
-   <q-table dense
-      :rows="rows"
-      :columns="columns"
-      title="Switch #17"
-      :rows-per-page-options="[]"
-      row-key="name"
-    >
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td key="desc" :props="props">
-            {{ props.row.name }}
-            <q-popup-edit v-model="props.row.name" buttons v-slot="scope">
-              <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
-            </q-popup-edit>
-          </q-td>
-          <q-td key="calories" :props="props">
-            {{ props.row.calories }}
-            <q-popup-edit v-model.number="props.row.calories" buttons v-slot="scope">
-              <q-input type="number" v-model.number="scope.value" dense autofocus @keyup.enter="scope.set" />
-            </q-popup-edit>
-          </q-td>
-          <q-td key="fat" :props="props">
-            <div class="text-pre-wrap">{{ props.row.fat }}</div>
-            <q-popup-edit v-model.number="props.row.fat" buttons v-slot="scope">
-              <q-input type="number" v-model.number="scope.value" dense autofocus @keyup.enter="scope.set" />
-            </q-popup-edit>
-          </q-td>
-          <q-td key="carbs" :props="props">
-            {{ props.row.carbs }}
-            <q-popup-edit v-model.number="props.row.carbs" buttons persistent v-slot="scope">
-              <q-input type="number" v-model.number="scope.value" dense autofocus @keyup.enter="scope.set" />
-            </q-popup-edit>
-          </q-td>
-          <q-td key="protein" :props="props">
-            {{ props.row.protein }}
-            <q-popup-edit v-model.number="props.row.protein" buttons label-set="Save" label-cancel="Close" v-slot="scope">
-              <q-input type="number" v-model.number="scope.value" dense autofocus @keyup.enter="scope.set" />
-            </q-popup-edit>
-          </q-td>
-          <q-td key="sodium" :props="props">
-            {{ props.row.sodium }}
-            <q-popup-edit v-model.number="props.row.sodium" buttons v-slot="scope">
-              <q-input type="number" v-model.number="scope.value" dense autofocus @keyup.enter="scope.set" />
-            </q-popup-edit>
-          </q-td>
-          <q-td key="calcium" :props="props">
-            {{ props.row.calcium }}
-            <q-popup-edit v-model="props.row.calcium" buttons v-slot="scope">
-              <q-input v-model="scope.value" dense autofocus @keyup.enter="scope.set" />
-            </q-popup-edit>
-          </q-td>
-          <q-td key="iron" :props="props">
-            {{ props.row.iron }}
-            <q-popup-edit v-model="props.row.iron" buttons v-slot="scope">
-              <q-input v-model="scope.value" dense autofocus @keyup.enter="scope.set" />
-            </q-popup-edit>
-          </q-td>
-        </q-tr>
-      </template>
-    </q-table>
-  </div>
-</template>
+<script setup>
+import jwt_decode from "jwt-decode";
+import Fuse from "fuse.js";
+import dateFormat from "dateformat";
+import Layout from "../../components/Layout.vue";
+import { onMounted, ref, watch } from "vue";
+import backend from "../../services/backend";
+import { token, setToken } from "../../services/token";
+import resIsOk from "../../utils/resIsOk";
+import { useRoute } from "vue-router";
+import { useQuasar } from "quasar";
 
-<script>
-import { ref } from 'vue'
+const q = useQuasar()
+const route = useRoute();
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+let decodedToken = jwt_decode(token.value);
+
+let switchdata = ref(null);
 
 const columns = [
-  { name: 'desc', align: 'left', label: 'Dessert (100g serving)', field: 'name' },
-  { name: 'calories', align: 'center', label: 'Calories', field: 'calories' },
-  { name: 'fat', label: 'Fat (g)', field: 'fat' },
+  {
+    name: "portNumber",
+    required: true,
+    label: "Port Number",
+    align: "left",
+    field: "portNumber",
+    sortable: true,
+  },
+  {
+    name: "patchPanelPortNumber",
+    required: true,
+    label: "Patch Panel Port Number",
+    align: "left",
+    field: "patchPanelPortNumber",
+    sortable: true,
+  },
+
+  {
+    name: "roomNumber",
+    required: true,
+    label: "Room Number",
+    align: "left",
+    field: "roomNumber",
+    sortable: true,
+  },
+
+  {
+    name: "batchNumberOnWall",
+    required: true,
+    label: "Batch Number On Wall",
+    align: "left",
+    field: "batchNumberOnWall",
+    sortable: true,
+  },
+];
+async function updatePort(portId) {
+   let res 
+   
+   try {
+    res = await backend.put(
+    `/switch/${route.query.id}/ports`,
+    switchdata.value.ports,
+    {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+    });
+  } catch (e){
+    let msg = e?.response?.data?.message
+    if (msg) q.notify({
+      message: msg,
+      color: 'negative'
+    })
+  }
+
  
-  { name: 'iron', label: 'Iron (%)', field: 'iron' }
-]
-
-const rows = [
-  {
-    name: 'Frozen Yogurt',
-    calories: 159,
-    fat: 6.0,
-    carbs: 24,
-    protein: 4.0,
-    sodium: 87,
-    calcium: '14%',
-    iron: '1%'
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-    fat: 9.0,
-    carbs: 37,
-    protein: 4.3,
-    sodium: 129,
-    calcium: '8%',
-    iron: '1%'
-  },
-  {
-    name: 'Eclair',
-    calories: 262,
-    fat: 16.0,
-    carbs: 23,
-    protein: 6.0,
-    sodium: 337,
-    calcium: '6%',
-    iron: '7%'
-  },
-  {
-    name: 'Cupcake',
-    calories: 305,
-    fat: 3.7,
-    carbs: 67,
-    protein: 4.3,
-    sodium: 413,
-    calcium: '3%',
-    iron: '8%'
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356,
-    fat: 16.0,
-    carbs: 49,
-    protein: 3.9,
-    sodium: 327,
-    calcium: '7%',
-    iron: '16%'
-  },
-  {
-    name: 'Jelly bean',
-    calories: 375,
-    fat: 0.0,
-    carbs: 94,
-    protein: 0.0,
-    sodium: 50,
-    calcium: '0%',
-    iron: '0%'
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-    fat: 0.2,
-    carbs: 98,
-    protein: 0,
-    sodium: 38,
-    calcium: '0%',
-    iron: '2%'
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-    fat: 3.2,
-    carbs: 87,
-    protein: 6.5,
-    sodium: 562,
-    calcium: '0%',
-    iron: '45%'
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-    fat: 25.0,
-    carbs: 51,
-    protein: 4.9,
-    sodium: 326,
-    calcium: '2%',
-    iron: '22%'
-  },
-  {
-    name: 'KitKat',
-    calories: 518,
-    fat: 26.0,
-    carbs: 65,
-    protein: 7,
-    sodium: 54,
-    calcium: '12%',
-    iron: '6%'
-  }
-]
-
-export default {
-  setup () {
-    return {
-      rows: ref(rows),
-      columns
-    }
-  }
 }
+
+onMounted(async () => {
+  if (!route.query.id) return;
+  let res = await backend.get(`/switch/${route.query.id}`, {
+    headers: {
+      Authorization: `Bearer ${token.value}`,
+    },
+  });
+  if (resIsOk(res)) {
+    let data = res.data;
+    switchdata.value = data;
+  }
+});
 </script>
+
+<template>
+  <Layout>
+    <div class="row fullwidth">
+      <q-btn 
+      class="q-my-md q-ml-auto" 
+      clickable 
+      v-close-popup 
+      @click="updatePort()" 
+      label="Save"
+      color="primary"
+      />
+      <!-- icon="check" -->
+      
+    </div>
+
+    <q-table
+      v-if="switchdata"
+      dense
+      row-key="_id"
+      class="table shad"
+      :title="switchdata.name"
+      :rows="switchdata.ports"
+      :columns="columns"
+      :rows-per-page-options="[0]"
+    >
+      <template v-slot:body-cell-portNumber="props">
+        <q-td :props="props.portNumber">
+          <q-input size="12px" dense v-model="props.row.portNumber"> </q-input>
+        </q-td>
+      </template>
+
+      <template v-slot:body-cell-patchPanelPortNumber="props">
+        <q-td :props="props.patchPanelPortNumber">
+          <q-input size="12px" dense v-model="props.row.patchPanelPortNumber">
+          </q-input>
+        </q-td>
+      </template>
+
+      <template v-slot:body-cell-roomNumber="props">
+        <q-td :props="props.roomNumber">
+          <q-input size="12px" dense v-model="props.row.roomNumber"> </q-input>
+        </q-td>
+      </template>
+
+      <template v-slot:body-cell-batchNumberOnWall="props">
+        <q-td :props="props.batchNumberOnWall">
+          <q-input size="12px" dense v-model="props.row.batchNumberOnWall">
+          </q-input>
+        </q-td>
+      </template>
+    </q-table>
+  </Layout>
+</template>
+
+<style scoped>
+.table :deep(th) {
+  font-weight: bold !important;
+}
+
+.filter-container {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+  padding: 25px;
+  flex-wrap: wrap;
+}
+
+.filter-container > * {
+  width: 250px;
+}
+
+.input-field-year {
+  width: 125px;
+}
+</style>

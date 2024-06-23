@@ -108,7 +108,7 @@ router.post("/", async (req, res) => {
 });
 
 // UPDATE
-router.put("/", async (req, res) => {
+router.put("/:id", async (req, res) => {
     //todo: check that the entire body is complete
   
     if (!req.user) {
@@ -156,7 +156,9 @@ router.put("/", async (req, res) => {
   
     // return res.sendStatus(400)
     try {
-      await Switch.create(data); // instert into db
+      
+      let update = await Switch.updateOne({_id:req.params.id}, data); // instert into db
+      
       console.log("updating!!");
       res.sendStatus(201); // give OK status
     } catch (e) {
@@ -167,9 +169,44 @@ router.put("/", async (req, res) => {
       res.status(400).json({
         message: msg,
       });
+      
       return;
     }
   });
+
+
+
+
+  //update ports 
+  router.put("/:switchId/ports", async (req, res) => {
+    if (!req.user) {
+      res.sendStatus(400);
+      return;
+    }
+
+    try {
+
+   await Switch.updateOne(
+      { _id: req.params.switchId },
+      { $set:
+         {
+          ports: req.body
+         }
+      }
+   )
+   return res.sendStatus(200)
+  } catch (e) {
+
+    let msg = "Error Occured";
+
+    res.status(400).json({
+      message: msg,
+    });
+    
+    return;
+  }
+
+  })
 
 // DELETE
 router.delete("/:id", async (req, res) => {
