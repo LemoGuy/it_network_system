@@ -1,31 +1,30 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import { useQuasar } from 'quasar'
-import Layout from '@/components/Layout.vue'
-import backend from '../../services/backend'
-import resIsOk from '../../utils/resIsOk'
-import { useRouter, useRoute } from 'vue-router'
-import userOptions from '../../constants/userOptions'
-import { token, setToken } from '../../services/token.js'
+import { onMounted, ref } from "vue";
+import { useQuasar } from "quasar";
+import Layout from "@/components/Layout.vue";
+import backend from "../../services/backend";
+import resIsOk from "../../utils/resIsOk";
+import { useRouter, useRoute } from "vue-router";
+import userOptions from "../../constants/userOptions";
+import { token, setToken } from "../../services/token.js";
 import buildingOptions from "../../constants/buildingOptions";
 import floorOptions from "../../constants/floorOptions";
 import brandOptions from "../../constants/brandOptions";
 import vlanOptions from "../../constants/vlanOptions";
 import switchOptions from "../../constants/switchOptions";
+// import switchValidater from '../../../../Backend/validator/switchValidater.js';
 
-
-const props = defineProps(['userId'])
-const $q = useQuasar()
-const router = useRouter()
-const route = useRoute()
-const data = ref({})
+const props = defineProps(["userId"]);
+const $q = useQuasar();
+const router = useRouter();
+const route = useRoute();
+const data = ref({});
 
 async function create() {
   let req = route.query.id ? backend.put : backend.post;
   let reqUrl = route.query.id ? `/switch/${route.query.id}` : `/switch`;
-  let res
+  let res;
 
- 
   try {
     res = await req(reqUrl, data.value, {
       headers: {
@@ -34,52 +33,55 @@ async function create() {
     });
     router.push("/switches/search");
   } catch (e) {
-    if (e.response.data.message) $q.notify(e.response.data.message);
+    if (e.response.data.messages) {
+      const msg = e.response.data.messages.join("<br>");
+      $q.notify({
+        message: msg,
+        html: true,
+      });
+      console.log(msg)
+    }
   }
-
 
   const formData = new FormData();
 
-if (
-  !data.value.building ||
-  !data.value.floor ||
-  !data.value.room ||
-  !data.value.shelfNumber ||
-  !data.value.name ||
-  !data.value.model ||
-  !data.value.brand ||
-  !data.value.macAddress ||
-  !data.value.serialNumber ||
-  !data.value.ipAddress ||
-  !data.value.subnet ||
-  !data.value.vlan ||
-  !data.value.firmwareVersion ||
-  !data.value.portType
-) {
-  $q.notify("All fields must be filled!");
-  return;
-}
-
+  if (
+    !data.value.building ||
+    !data.value.floor ||
+    !data.value.room ||
+    !data.value.shelfNumber ||
+    !data.value.name ||
+    !data.value.model ||
+    !data.value.brand ||
+    !data.value.macAddress ||
+    !data.value.serialNumber ||
+    !data.value.ipAddress ||
+    !data.value.subnet ||
+    !data.value.vlan ||
+    !data.value.firmwareVersion ||
+    !data.value.portType
+  ) {
+    $q.notify("All fields must be filled!");
+    return;
+  }
 }
 
 onMounted(async () => {
-  if (!route.query.id) return
+  if (!route.query.id) return;
 
   let res = await backend.get(`/switch/${route.query.id}`, {
     headers: {
       Authorization: `Bearer ${token.value}`,
-    }
-  })
+    },
+  });
   data.value = res.data;
-})
+});
 </script>
 
 <template>
   <Layout>
     <q-card class="container">
-        <p class="title">
-                Switch details
-            </p>
+      <p class="title">Switch details</p>
       <div class="input-container">
         <q-select
           outlined
@@ -208,8 +210,6 @@ onMounted(async () => {
         @click="create()"
       />
     </q-card>
-
-    
   </Layout>
 </template>
 

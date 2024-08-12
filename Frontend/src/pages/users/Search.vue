@@ -83,7 +83,7 @@ const columns = [
     {
         name: 'type',
         required: true,
-        label: 'User Type',
+        label: 'User Role',
         align: 'left',
         field: 'type',
         sortable: true

@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const User = require("../models/User.js"); // db table
 const express = require("express"); // e
 const router = express.Router();
+const switchValidater = require("../validator/switchValidater.js")
 
 const Switch = require("../models/Switch.js");
 
@@ -55,25 +56,12 @@ router.post("/", async (req, res) => {
   let data = { ...req.body, uploadedBy: req.user._id }; // get the post data
 
   console.log(req.body);
-  if (
-    !data.building ||
-    !data.floor ||
-    !data.room ||
-    !data.shelfNumber ||
-    !data.name ||
-    !data.model ||
-    !data.brand ||
-    !data.macAddress ||
-    !data.serialNumber ||
-    !data.ipAddress ||
-    !data.subnet ||
-    !data.vlan ||
-    !data.firmwareVersion ||
-    !data.portType
-  ) {
-    res.status(400).json({
-      message: "Form is not compelete!",
-    });
+  let result = switchValidater.safeParse(data)
+  if (!result.success) {
+    let messages = result.error.issues.map(i => i.message)
+    console.log(result.error.issues.map(i => i.path))
+    res.status(400).json({messages});
+    // console.log("reaching!!!!")
     return;
   }
   data.uploadDate = new Date();
@@ -98,7 +86,7 @@ router.post("/", async (req, res) => {
   } catch (e) {
     console.log(e);
 
-    let msg = "Error Occured";
+    let msg = "Error occured";
 
     res.status(400).json({
       message: msg,

@@ -26,6 +26,7 @@ async function create() {
                 Authorization: `Bearer ${token.value}`,
             }
         })
+        $q.notify("Success!")
         router.push('/users/search')
     } catch (e) {
         if (e.response.data.message) $q.notify(e.response.data.message)
@@ -61,7 +62,7 @@ onMounted(async () => {
                 <q-input outlined class="input-field" v-model="data.email" label="Email"
                     :rules="[val => !!val || 'Field is required']" />
 
-                <q-select outlined class='input-field' v-model='data.type' label='User Type' :options="userOptions"
+                <q-select outlined class='input-field' v-model='data.type' label='User Role' :options="userOptions"
                     emit-value :rules="[val => !!val || 'Field is required']" />
 
                 <q-input outlined class="input-field" v-model="data.password" label="Password" type="password"

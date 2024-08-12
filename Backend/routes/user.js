@@ -144,6 +144,20 @@ router.post('/', async (req, res) => {
         return
     }
 
+    if (data.name.length < 5 || data.name.length > 100) {
+        res.status(400).json({
+            message: 'Name must be between 5 to 100 charecters!'
+        })
+        return
+    }
+
+    if (!/^[a-zA-z ]*$/.test(data.name)) {
+        res.status(400).json({
+            message: 'Name must not contain special charecters!'
+        })
+        return
+    }
+
     data.email = data.email.toLowerCase();
     data.username = data.username.toLowerCase();
 
@@ -168,19 +182,9 @@ router.post('/', async (req, res) => {
         return
     }
 
-    if (data.name.length < 5 || data.name.length > 100) {
-        res.status(400).json({
-            message: 'Name must be between 5 to 100 charecters!'
-        })
-        return
-    }
+   
 
-    if (!/^[a-zA-z ]*$/.test(data.name)) {
-        res.status(400).json({
-            message: 'Name must not containe special charecters!'
-        })
-        return
-    }
+   
 
     if (data.password.length < 8 || data.password.length > 50) {
         res.status(400).json({

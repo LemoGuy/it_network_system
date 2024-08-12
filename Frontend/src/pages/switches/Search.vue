@@ -7,6 +7,7 @@ import { onMounted, ref, watch } from "vue";
 import backend from "../../services/backend";
 import { token, setToken } from "../../services/token";
 import resIsOk from "../../utils/resIsOk";
+import SwitchtOptions from "../../components/SwitchOptions.vue";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -17,6 +18,10 @@ let filteredSwitches = ref([]);
 let switchName = ref("");
 
 let fuse = null;
+const dialog = ref({
+    dialogOpen: false,
+    message: ''
+})
 
 const pageOptions = {
   rowsPerPage: 10,
@@ -31,7 +36,7 @@ const columns = [
     field: "name",
     sortable: true,
   },
-  
+
   {
     name: "ip",
     required: true,
@@ -85,7 +90,7 @@ const columns = [
     required: true,
     label: "Uploaded By",
     align: "left",
-    field: f => f.uploadedBy.name,
+    field: (f) => f.uploadedBy.name,
     sortable: true,
   },
 
@@ -102,10 +107,10 @@ const columns = [
     label: "Ports",
     name: "ports",
   },
-  {
-    label: "Edit",
-    name: "edit",
-  },
+  // {
+  //   label: "Edit",
+  //   name: "edit",
+  // },
   {
     // label: "Remove",
     name: "delete",
@@ -115,20 +120,28 @@ const columns = [
 onMounted(async () => {
   let res = await backend.get("/switch", {
     headers: {
-      Authorization: `Bearer ${token.value}`
-    }
+      Authorization: `Bearer ${token.value}`,
+    },
   });
   if (resIsOk) {
     let data = res.data;
 
     switches.value = data;
     filteredSwitches.value = data;
-    
+
     fuse = new Fuse(data, {
-      keys: ["name", "uploadedBy.name"]
+      keys: ["name", "name", "ipAddress"],
+      threshold: 0.25,
     });
   }
 });
+
+const showMessage = (message) => {
+  dialog.value.message = message;
+  dialog.value.dialogOpen = true;
+
+  setTimeout(() => (dialog.value.dialogOpen = false), 3000);
+};
 
 const handleSearch = (e) => {
   if (e === "") {
@@ -174,7 +187,8 @@ async function deleteSwitch(id) {
       </q-input>
     </q-card>
 
-    <q-table dense
+    <q-table
+      dense
       row-key="_id"
       class="table shad"
       title="Switches"
@@ -184,41 +198,65 @@ async function deleteSwitch(id) {
     >
       <template v-slot:body-cell-ports="props">
         <q-td :props="props">
-          <q-btn size="12px" dense clickable v-close-popup :href="`/#/switches/view?id=${props.row._id}`">
-            <q-icon center name="visibility" color="black" /></q-btn>
+          <q-btn
+            size="12px"
+            dense
+            clickable
+            v-close-popup
+            :href="`/#/switches/view?id=${props.row._id}`"
+          >
+            <q-icon center name="visibility" color="black"
+          /></q-btn>
           <!-- <a :href="getFileUrl(props.row)">{{props.row.name}}</a> -->
         </q-td>
       </template>
 
-      <template v-slot:body-cell-edit="props">
+      <!-- <template v-slot:body-cell-edit="props">
         <q-td :props="props">
-          <q-btn  size="12px" dense clickable v-close-popup :href="`/#/switches/create?id=${props.row._id}`">
+          <q-btn
+            size="12px"
+            dense
+            clickable
+            v-close-popup
+            :href="`/#/switches/create?id=${props.row._id}`"
+          >
             <q-icon center name="edit" color="black" />
-          </q-btn>
+          </q-btn> -->
           <!-- <a :href="getFileUrl(props.row)">{{props.row.name}}</a> -->
-        </q-td>
-      </template>
+        <!-- </q-td> -->
+      <!-- </template> -->
       <template
         v-slot:body-cell-delete="props"
         v-if="decodedToken.role === 'Admin'"
       >
         <q-td :props="props">
+          <SwitchtOptions
+            :row="props.row"
+            :deleteSelf="deleteSwitch"
+            :show-message="showMessage"
+          />
+
+          <!-- 
           <q-btn size="12px" dense
             @click="deleteSwitch(props.row._id)"
             icon="delete_forever"
             color="red"
-          />
+          /> -->
           <!-- <a :href="getFileUrl(props.row)">{{props.row.name}}</a> -->
         </q-td>
       </template>
     </q-table>
+    <q-dialog v-model="dialog.dialogOpen" position="bottom" seamless>
+      <q-card style="width: 300px">
+        <q-card-section style="background-color: #2e2e2e">
+          <div class="text-weight-bold text-center text-white">
+            The Switch has been deleted.
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </Layout>
 </template>
-
-
-
-
-
 
 <style scoped>
 .table :deep(th) {

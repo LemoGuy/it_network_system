@@ -10,7 +10,7 @@ import resIsOk from "../../utils/resIsOk";
 import { useRoute } from "vue-router";
 import { useQuasar } from "quasar";
 
-const q = useQuasar()
+const q = useQuasar();
 const route = useRoute();
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -55,27 +55,36 @@ const columns = [
     sortable: true,
   },
 ];
-async function updatePort(portId) {
-   let res 
-   
-   try {
-    res = await backend.put(
-    `/switch/${route.query.id}/ports`,
-    switchdata.value.ports,
-    {
-      headers: {
-        Authorization: `Bearer ${token.value}`,
-      },
-    });
-  } catch (e){
-    let msg = e?.response?.data?.message
-    if (msg) q.notify({
-      message: msg,
-      color: 'negative'
-    })
-  }
 
- 
+
+
+
+
+
+
+
+
+async function updatePort(portId) {
+  let res;
+
+  try {
+    res = await backend.put(
+      `/switch/${route.query.id}/ports`,
+      switchdata.value.ports,
+      {
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+        },
+      }
+    );
+  } catch (e) {
+    let msg = e?.response?.data?.message;
+    if (msg)
+      q.notify({
+        message: msg,
+        color: "negative",
+      });
+  }
 }
 
 onMounted(async () => {
@@ -95,16 +104,24 @@ onMounted(async () => {
 <template>
   <Layout>
     <div class="row fullwidth">
-      <q-btn 
-      class="q-my-md q-ml-auto" 
-      clickable 
-      v-close-popup 
-      @click="updatePort()" 
-      label="Save"
-      color="primary"
+      <q-btn
+      class="q-my-md q-ml-auto"
+        clickable
+        v-close-popup
+        @click="updatePort()"
+        label="Save"
+        color="primary"
+      />
+      
+      <q-btn
+        class="q-my-md q-ml-md"
+        clickable
+        v-close-popup
+        @click="downloadExcel()"
+        label="Download excel"
+        color="green"
       />
       <!-- icon="check" -->
-      
     </div>
 
     <q-table
