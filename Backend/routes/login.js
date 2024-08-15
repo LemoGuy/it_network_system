@@ -10,7 +10,7 @@ const passport = require('passport');
 // Login
 router.post('/', async (req, res) => {
   let user = await User.findOne({ "username": req.body.username })
-  if (!user) {
+  if (!user || user.status !="Active") {
     res.sendStatus(404)
     return
   }
@@ -22,7 +22,8 @@ router.post('/', async (req, res) => {
 
   let token = jwt.sign({
     "sub": user.username,
-    "role": user.type
+    "role": user.type,
+    "status": user.status
     // "exp": (new Date()).getTime() + 3600
   }, "1234567890")
   res.send({ token })

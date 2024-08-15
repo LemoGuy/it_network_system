@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const User = require("../models/User.js"); // db table
 const express = require("express"); // e
 const router = express.Router();
-const switchValidater = require("../validator/switchValidater.js")
+const switchValidater = require("../validator/switchValidater.js");
 
 const Switch = require("../models/Switch.js");
 
@@ -46,8 +46,6 @@ router.get("/:id", async (req, res) => {
 
 // data that user did post, inside req.body
 router.post("/", async (req, res) => {
-  //todo: check that the entire body is complete
-
   if (!req.user) {
     res.sendStatus(400);
     return;
@@ -56,11 +54,11 @@ router.post("/", async (req, res) => {
   let data = { ...req.body, uploadedBy: req.user._id }; // get the post data
 
   console.log(req.body);
-  let result = switchValidater.safeParse(data)
+  let result = switchValidater.safeParse(data);
   if (!result.success) {
-    let messages = result.error.issues.map(i => i.message)
-    console.log(result.error.issues.map(i => i.path))
-    res.status(400).json({messages});
+    let messages = result.error.issues.map((i) => i.message);
+    console.log(result.error.issues.map((i) => i.path));
+    res.status(400).json({ messages });
     // console.log("reaching!!!!")
     return;
   }
@@ -97,104 +95,107 @@ router.post("/", async (req, res) => {
 
 // UPDATE
 router.put("/:id", async (req, res) => {
-    //todo: check that the entire body is complete
-  
-    if (!req.user) {
-      res.sendStatus(400);
-      return;
-    }
-  
-    let data = { ...req.body, uploadedBy: req.user._id }; // get the post data
-  
-    console.log(req.body);
-    if (
-      !data.building ||
-      !data.floor ||
-      !data.room ||
-      !data.shelfNumber ||
-      !data.name ||
-      !data.model ||
-      !data.brand ||
-      !data.macAddress ||
-      !data.serialNumber ||
-      !data.ipAddress ||
-      !data.subnet ||
-      !data.vlan ||
-      !data.firmwareVersion ||
-      !data.portType
-    ) {
-      res.status(400).json({
-        message: "Form is not compelete!",
-      });
-      return;
-    }
-    data.uploadDate = new Date();
-    data.uploadedBy = req.user._id;
-    data.ports = [];
-  
-    for (let i = 0; i < data.portType; i++) {
+  //todo: check that the entire body is complete
+
+  if (!req.user) {
+    res.sendStatus(400);
+    return;
+  }
+
+  let data = { ...req.body, uploadedBy: req.user._id }; // get the post data
+
+  if (
+    !data.building ||
+    !data.floor ||
+    !data.room ||
+    !data.shelfNumber ||
+    !data.name ||
+    !data.model ||
+    !data.brand ||
+    !data.macAddress ||
+    !data.serialNumber ||
+    !data.ipAddress ||
+    !data.subnet ||
+    !data.vlan ||
+    !data.firmwareVersion ||
+    !data.portType
+  ) {
+    res.status(400).json({
+      message: "Form is not compelete!",
+    });
+    return;
+  }
+
+  let oldSwitch = await Switch.findOne({ _id: req.params.id });
+
+  data.uploadDate = new Date();
+  data.uploadedBy = req.user._id;
+  data.ports = oldSwitch.ports;
+  if (oldSwitch.portType > data.portType) {
+    console.log('here1');
+
+    data.ports = oldSwitch.ports.slice(0, data.portType).map(p => {
+      delete p.__v
+      return p
+    })
+  } else {
+    console.log('here2');
+    for (let i = 0; i < data.portType - oldSwitch.portType; i++) {
       data.ports.push({
-        portNumber: i + 1,
-        patchPanelPortNumber: `${i + 1}`,
+        portNumber: oldSwitch.portType + i + 1,
+        patchPanelPortNumber: `${oldSwitch.portType + i + 1}`,
         roomNumber: " ",
         batchNumberOnWall: " ",
       });
     }
-    console.log(data);
-  
-    // return res.sendStatus(400)
-    try {
-      
-      let update = await Switch.updateOne({_id:req.params.id}, data); // instert into db
-      
-      console.log("updating!!");
-      res.sendStatus(201); // give OK status
-    } catch (e) {
-      console.log(e);
-  
-      let msg = "Error Occured";
-  
-      res.status(400).json({
-        message: msg,
-      });
-      
-      return;
-    }
-  });
+  }
 
+  // return res.sendStatus(400)
+  try {
+    let update = await Switch.updateOne({ _id: req.params.id }, data); // instert into db
 
-
-
-  //update ports 
-  router.put("/:switchId/ports", async (req, res) => {
-    if (!req.user) {
-      res.sendStatus(400);
-      return;
-    }
-
-    try {
-
-   await Switch.updateOne(
-      { _id: req.params.switchId },
-      { $set:
-         {
-          ports: req.body
-         }
-      }
-   )
-   return res.sendStatus(200)
+    console.log("updating!!");
+    res.sendStatus(201); // give OK status
   } catch (e) {
+    console.log(e);
 
     let msg = "Error Occured";
 
     res.status(400).json({
       message: msg,
     });
-    
+
+    return;
+  }
+});
+
+//update ports
+router.put("/:switchId/ports", async (req, res) => {
+  if (!req.user) {
+    res.sendStatus(400);
     return;
   }
 
-  })
+  try {
+    await Switch.updateOne(
+      { _id: req.params.switchId },
+      {
+        $set: {
+          ports: req.body,
+        },
+      }
+    );
+    return res.sendStatus(200);
+  } catch (e) {
+    let msg = "Error Occured";
+
+    res.status(400).json({
+      message: msg,
+    });
+
+    return;
+  }
+});
 
 // DELETE
 router.delete("/:id", async (req, res) => {

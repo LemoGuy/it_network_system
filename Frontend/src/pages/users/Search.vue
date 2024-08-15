@@ -6,7 +6,7 @@ import { useQuasar } from 'quasar';
 import backend from '../../services/backend';
 import { token, setToken } from '../../services/token'
 import resIsOk from '../../utils/resIsOk';
-import AccountOptions from '../../components/AccountOptions.vue'
+// import AccountOptions from '../../components/AccountOptions.vue'
 
 let users = ref([]);
 let filters = ref({})
@@ -15,33 +15,33 @@ let filteredUsers = ref([]);
 let userName = ref('');
 
 let fuse = null;
-const dialog = ref({
-    dialogOpen: false,
-    message: ''
-})
+// const dialog = ref({
+//     dialogOpen: false,
+//     message: ''
+// })
 
-const deleteUser = (id) => {
-    // list of values from db
-    users.value = users.value.filter(user => {
-        // check all list and remove the one we selected from the original list
-        return user._id != id
+// const deleteUser = (id) => {
+//     // list of values from db
+//     users.value = users.value.filter(user => {
+//         // check all list and remove the one we selected from the original list
+//         return user._id != id
 
-    })
+//     })
 
-    filteredUsers.value = filteredUsers.value.filter(user => {
-        // check all list and remove the one we selected from the original list
-        return user._id != id
+//     filteredUsers.value = filteredUsers.value.filter(user => {
+//         // check all list and remove the one we selected from the original list
+//         return user._id != id
 
-    })
+//     })
 
-    fuse = new Fuse(users.value, {
-        keys: ['name', 'username', 'email']
-    })
-}
+//     fuse = new Fuse(users.value, {
+//         keys: ['name', 'username', 'email']
+//     })
+// }
 
 
 const pageOptions = {
-    rowsPerPage: 5
+    rowsPerPage: 7
 }
 
 const columns = [
@@ -89,7 +89,18 @@ const columns = [
         sortable: true
     },
     {
-        name: 'decision',
+        name: 'status',
+        required: true,
+        label: 'Status',
+        align: 'left',
+        field: 'status',
+        sortable: true
+    },
+    {
+        name: 'edit',
+        required: true,
+        label: 'Edit',
+        align: 'left',
     }
 ]
 
@@ -108,12 +119,12 @@ onMounted(async () => {
     }
 })
 
-const showMessage = (message) => {
-    dialog.value.message = message
-    dialog.value.dialogOpen = true
+// const showMessage = (message) => {
+//     dialog.value.message = message
+//     dialog.value.dialogOpen = true
 
-    setTimeout(() => dialog.value.dialogOpen = false, 3000)
-}
+//     setTimeout(() => dialog.value.dialogOpen = false, 3000)
+// }
 
 const handleSearch = (e) => {
     if (e === '') {
@@ -138,22 +149,40 @@ const handleSearch = (e) => {
         <q-table row-key="_id" class='table shad' title="Users" :rows="filteredUsers" :columns="columns"
             :pagination="pageOptions">
 
-            <template v-slot:body-cell-decision="props">
+       
+
+            <template v-slot:body-cell-edit="props">
+        <q-td :props="props">
+          <q-btn
+            size="12px"
+            dense
+            clickable
+            v-close-popup
+            :href="`/#/users/create?id=${props.row._id}`"
+          >
+            <q-icon center name="edit" color="black"
+          /></q-btn>
+        </q-td>
+      </template>
+
+        </q-table>
+          <!--      <template v-slot:body-cell-decision="props">
                 <q-td :props="props">
                     <AccountOptions :row="props.row" :deleteSelf="deleteUser" :show-message="showMessage" />
                 </q-td>
             </template>
 
-        </q-table>
+
+            <a :href="getFileUrl(props.row)">{{props.row.name}}</a> 
 
         <q-dialog v-model="dialog.dialogOpen" position="bottom" seamless>
             <q-card style="width: 300px;">
                 <q-card-section style="background-color: #2E2E2E;">
-                    <div class="text-weight-bold text-center text-white">The Account has been deleted.</div>
+                    <div class="text-weight-bold text-center text-white">The Account has been disabled.</div>
                 </q-card-section>
             </q-card>
         </q-dialog>
-
+-->
 
     </Layout>
 </template>

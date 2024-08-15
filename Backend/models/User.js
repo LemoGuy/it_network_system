@@ -24,6 +24,9 @@ const schema = new mongoose.Schema({
     type: { 
         type: String, 
         required: true 
+    },
+    status: {
+        type: String, 
     }
 });
 

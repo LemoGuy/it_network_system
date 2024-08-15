@@ -19,7 +19,7 @@ opts.jwtFromRequest = (req) => {
 opts.secretOrKey = '1234567890';
 
 passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
-  User.findOne({ username: jwt_payload.sub }, function (err, user) {
+  User.findOne({ username: jwt_payload.sub, status:"Active" }, function (err, user) {
     if (err) {
       return done(err, false);
     }

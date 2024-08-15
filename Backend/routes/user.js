@@ -40,7 +40,7 @@ router.put('/:user_id', async (req, res) => {
 
 
     let data = { ...req.body }; // get the post data
-    if (!data.name || !data.username || !data.email || !data.password || !data.password2 || !data.type) {
+    if (!data.name || !data.username || !data.email || !data.password || !data.password2 || !data.type || !data.status) {
         res.status(400).json({
             message: 'Form is not compelete!'
         })
@@ -137,7 +137,7 @@ router.post('/', async (req, res) => {
 
     let data = { ...req.body }; // get the post data
 
-    if (!data.name || !data.username || !data.password || !data.password2 || !data.type) {
+    if (!data.name || !data.username || !data.password || !data.password2 || !data.type  || !data.status) {
         res.status(400).json({
             message: 'Form is not compelete!'
         })
@@ -227,7 +227,7 @@ router.delete('/:id', async (req, res) => {
         res.sendStatus(400)
         return
     }
-    await User.deleteOne({ _id: req.params.id });
+    await User.updateOne({ _id: req.params.id }, {status: "Disabled"});
     res.sendStatus(200)
 })
 

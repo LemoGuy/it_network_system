@@ -16,7 +16,7 @@ import ViewSwitch from './pages/switches/View.vue'
 // import SearchPhoto from './pages/switchPhoto/Search.vue'
 // import MyPhotos from './pages/switchPhoto/MySwitchPhotos.vue'
 
-// import ForgetPassword from './pages/ForgetPassword.vue'
+import ForgetPassword from './pages/ForgetPassword.vue'
 
 
 import { Quasar, Notify } from 'quasar'
@@ -35,6 +35,11 @@ const routes = [
     {
         path: '/dashboard',
         component: Dashboard,
+        meta: { authRequired: true }
+    },
+    {
+        path: '/help',
+        component: ForgetPassword,
         meta: { authRequired: true }
     },
     {
@@ -100,7 +105,17 @@ const routes = [
     //     path: '/forget_password',
     //     component: ForgetPassword,
     // }
+
+
+    // if (decodedToken.status != "Active") {
+    //     setToken("");
+    //     router.push("/login");
+    //   }
+
 ]
+
+
+
 
 const router = createRouter({
     routes,
@@ -123,3 +138,6 @@ app.use(Quasar, {
 })
 
 app.mount('#app')
+
+
+

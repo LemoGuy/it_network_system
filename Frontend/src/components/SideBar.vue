@@ -10,6 +10,11 @@ let decodedToken = jwt_decode(token.value);
 const props = defineProps(["open"]);
 defineEmits(["open"]);
 
+// if (decodedToken.status == "Disabled") {
+//   setToken("");
+//   router.push("/login");
+// }
+
 function logout() {
   setToken("");
   router.push("/login");
@@ -48,6 +53,7 @@ function logout() {
 
           <q-item-section> Home </q-item-section>
         </q-item>
+
         <q-expansion-item
           v-if="decodedToken.role == 'Admin'"
           icon="group"
@@ -69,7 +75,7 @@ function logout() {
             <q-item-section> Search </q-item-section>
           </q-item>
         </q-expansion-item>
-<!-- 
+        <!-- 
         <q-expansion-item icon="hub" label="Servers" :content-inset-level="0.5">
           <q-item clickable v-ripple to="/dashboard">
             <q-item-section avatar>
@@ -199,6 +205,14 @@ function logout() {
 
           <q-item-section> Help </q-item-section>
         </q-item> -->
+
+        <q-item clickable v-ripple to="/help">
+          <q-item-section avatar>
+            <q-icon name="help" />
+          </q-item-section>
+
+          <q-item-section> Help </q-item-section>
+        </q-item>
 
         <q-item class="shad" clickable v-ripple @click="logout()">
           <q-item-section avatar>

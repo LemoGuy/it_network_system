@@ -117,8 +117,8 @@ onMounted(async () => {
         class="q-my-md q-ml-md"
         clickable
         v-close-popup
-        @click="downloadExcel()"
-        label="Download excel"
+        @click="download()"
+        label="Download"
         color="green"
       />
       <!-- icon="check" -->
