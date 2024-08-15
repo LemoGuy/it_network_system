@@ -10,10 +10,10 @@ let decodedToken = jwt_decode(token.value);
 const props = defineProps(["open"]);
 defineEmits(["open"]);
 
-if (decodedToken.status == "Disabled") {
-  setToken("");
-  router.push("/login");
-}
+// if (decodedToken.status == "Disabled") {
+//   setToken("");
+//   router.push("/login");
+// }
 
 function logout() {
   setToken("");

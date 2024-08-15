@@ -72,6 +72,27 @@ onMounted(async () => {
           :rules="[(val) => !!val || 'Field is required']"
         />
 
+        
+
+        
+
+        <q-input
+          outlined
+          class="input-field"
+          v-model="data.password"
+          label="Password"
+          type="password"
+          :rules="[(val) => !!val || 'Field is required']"
+        />
+        <q-input
+          outlined
+          class="input-field"
+          v-model="data.password2"
+          label="Re-write password"
+          type="password"
+          :rules="[(val) => !!val || 'Field is required']"
+        />
+
         <q-select
           outlined
           class="input-field"
@@ -92,23 +113,6 @@ onMounted(async () => {
           :rules="[(val) => !!val || 'Field is required']"
         />
 
-        <q-input
-          outlined
-          class="input-field"
-          v-model="data.password"
-          label="Password"
-          type="password"
-          :rules="[(val) => !!val || 'Field is required']"
-        />
-        <q-input
-          outlined
-          class="input-field"
-          v-model="data.password2"
-          label="Re-write password"
-          type="password"
-          :rules="[(val) => !!val || 'Field is required']"
-        />
-
         <!-- <q-file outlined v-model="data.photo" label="Upload Photo" class="input-field" clearable /> -->
       </div>
       <q-btn
@@ -120,9 +124,7 @@ onMounted(async () => {
   </Layout>
 </template>
 <style scoped>
-.address {
-  width: 520px;
-}
+
 
 .title {
   font-size: 15pt;
@@ -131,11 +133,8 @@ onMounted(async () => {
 .container {
   display: flex;
   flex-direction: column;
-
-  /* border: 1px solid grey; */
-  /* border-radius: 10px; */
   padding: 25px;
-  width: 40%;
+  width: 100%;
   min-width: 300px;
   margin-inline: auto;
 }
@@ -145,22 +144,6 @@ onMounted(async () => {
   flex-wrap: wrap;
   flex-direction: row;
   width: 100%;
-  gap: 20px;
-}
-
-.gender-select {
-  display: flex;
-  align-items: center;
-  height: 56px;
-}
-
-.birthdate-input {
-  padding: 0;
-}
-
-.gender-select > p {
-  margin: 0;
-  font-size: 12pt;
 }
 
 .create-btn {
@@ -170,8 +153,7 @@ onMounted(async () => {
 }
 
 .input-field {
-  width: 400px;
-  margin-left: auto;
+  width: 30%;
   margin-right: auto;
 }
 </style>

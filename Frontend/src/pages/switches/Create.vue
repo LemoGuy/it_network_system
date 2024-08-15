@@ -161,7 +161,7 @@ onMounted(async () => {
         />
         <q-input
           outlined
-          class="ip"
+          class="input-field"
           v-model="data.ipAddress"
           label="IP Address"
           :rules="[(val) => !!val || 'Field is required']"
@@ -169,7 +169,7 @@ onMounted(async () => {
 
         <q-input
           outlined
-          class="subnet"
+          class="input-field"
           v-model="data.subnet"
           label="Subnet"
           :rules="[(val) => !!val || 'Field is required']"
@@ -255,6 +255,6 @@ onMounted(async () => {
 }
 
 .input-field {
-  width: 175px;
+  width: 30%;
 }
 </style>

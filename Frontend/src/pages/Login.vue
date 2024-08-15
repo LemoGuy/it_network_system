@@ -84,7 +84,7 @@ function handleLoginEntry(e) {
   display: flex;
   width: 400px;
   margin: auto;
-  margin-top: 150px;
+  margin-top: 5%;
 }
 
 .login-btn {

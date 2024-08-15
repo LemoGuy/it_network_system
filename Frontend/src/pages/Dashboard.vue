@@ -163,7 +163,7 @@ margin-top: 10px;
     /* border: 1px solid grey; */
     /* border-radius: 10px; */
     padding: 25px;
-    width: 50%;
+    width: 100%;
     min-width: 300px;
     margin-inline: auto;
 }
