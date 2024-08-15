@@ -56,13 +56,26 @@ const columns = [
   },
 ];
 
+async function download() {
+  let portDetails =
+    "Port Number\tPatch Panle Port Number\tRoom Number\tBatch Number On Wall\n";
+  for (const row of switchdata.value.ports) {
+    portDetails += `${row.portNumber}\t${row.patchPanelPortNumber}\t${row.roomNumber}\t${row.batchNumberOnWall}\n`;
+  }
+  const blob = new Blob([portDetails], { type: "text/plain" });
 
+  const url = URL.createObjectURL(blob);
 
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "data.tsv"; 
 
+  document.body.appendChild(a);
 
+  a.click();
 
-
-
+  document.body.removeChild(a);
+}
 
 async function updatePort(portId) {
   let res;
@@ -105,14 +118,14 @@ onMounted(async () => {
   <Layout>
     <div class="row fullwidth">
       <q-btn
-      class="q-my-md q-ml-auto"
+        class="q-my-md q-ml-auto"
         clickable
         v-close-popup
         @click="updatePort()"
         label="Save"
         color="primary"
       />
-      
+
       <q-btn
         class="q-my-md q-ml-md"
         clickable
@@ -136,27 +149,25 @@ onMounted(async () => {
     >
       <template v-slot:body-cell-portNumber="props">
         <q-td :props="props.portNumber">
-          <q-input size="12px" dense v-model="props.row.portNumber"> </q-input>
+          <q-input dense v-model="props.row.portNumber"> </q-input>
         </q-td>
       </template>
 
       <template v-slot:body-cell-patchPanelPortNumber="props">
         <q-td :props="props.patchPanelPortNumber">
-          <q-input size="12px" dense v-model="props.row.patchPanelPortNumber">
-          </q-input>
+          <q-input dense v-model="props.row.patchPanelPortNumber"> </q-input>
         </q-td>
       </template>
 
       <template v-slot:body-cell-roomNumber="props">
         <q-td :props="props.roomNumber">
-          <q-input size="12px" dense v-model="props.row.roomNumber"> </q-input>
+          <q-input dense v-model="props.row.roomNumber"> </q-input>
         </q-td>
       </template>
 
       <template v-slot:body-cell-batchNumberOnWall="props">
         <q-td :props="props.batchNumberOnWall">
-          <q-input size="12px" dense v-model="props.row.batchNumberOnWall">
-          </q-input>
+          <q-input dense v-model="props.row.batchNumberOnWall"> </q-input>
         </q-td>
       </template>
     </q-table>
