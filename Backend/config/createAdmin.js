@@ -11,7 +11,8 @@ module.exports = async () => {
         username: 'admin',
         email: 'admin@tiu.edu.iq',
         password: 'admin123',
-        type: 'Admin'
+        type: 'Admin',
+        status: 'Active'
     };
 
     let hash = bcrypt.hashSync(data.password, bcrypt.genSaltSync(10))
